@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'importexcel';
+  DataFromEventEmitter(data) {
+    console.log(data);
+  }
 }
