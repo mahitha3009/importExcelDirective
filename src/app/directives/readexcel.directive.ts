@@ -1,3 +1,4 @@
+import { createOfflineCompileUrlResolver } from '@angular/compiler';
 import { Directive, HostListener, Output, EventEmitter } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import * as XLSX from 'xlsx';
@@ -27,12 +28,40 @@ export class ReadexcelDirective {
 
   readFile(file: File, subscriber: Subscriber<any>) {
     const fileReader = new FileReader();
-    fileReader.readAsArrayBuffer(file);
-
+    var Ext= file.name.split('.')[1]; 
+    console.log(Ext);
+    if( Ext == "csv")
+    {
+    fileReader.readAsText(file);
     fileReader.onload = (e) => {
-      const bufferArray = e.target.result;
+    const bufferArray = e.target.result;
+    const wb: XLSX.WorkBook = XLSX.read(bufferArray, { type: 'string' });
+    const wsname: string = wb.SheetNames[0];
 
-      const wb: XLSX.WorkBook = XLSX.read(bufferArray, { type: 'buffer' });
+    const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+    const data = XLSX.utils.sheet_to_json(ws);
+
+    var output = data.map(function(obj) {
+      return Object.keys(obj).sort().map(function(key) { 
+        return obj[key];
+      });
+    });
+    var keys = Object.keys(data[0]);
+    output.unshift(keys);
+
+console.log("data",output);
+    subscriber.next(output);
+    subscriber.complete();
+  };
+}
+    else 
+    {
+      fileReader.readAsArrayBuffer(file);
+      fileReader.onload = (e) => {
+        const bufferArray = e.target.result;
+    
+       const wb: XLSX.WorkBook = XLSX.read(bufferArray, { type: 'buffer' });
 
       const wsname: string = wb.SheetNames[0];
 
@@ -53,6 +82,7 @@ console.log("data",output);
       subscriber.complete();
     };
   }
+}
 }
 
    
