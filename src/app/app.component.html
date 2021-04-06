@@ -4,12 +4,32 @@
   <li>{{ n.ID }}</li>
 </ul>
 -->
+<!--
 <table class="imp">
   <tbody>
     <tr *ngFor="let row of readexcel.excelObservable | async">
     <td *ngFor="let val of row">
+      <p *ngFor=" let h of readexcel.headers"> {{h}} </p> 
       {{val}}
     </td>
+
   </tr>
   </tbody>
 </table>
+-->
+<div >
+  <table> 
+    <p *ngIf ="readexcel.isPresent">
+      <th *ngFor="let h of readexcel.headers">
+      {{h}}
+      </th>
+    </p>
+       
+    <tr *ngFor="let row of readexcel.excelObservable | async">
+   
+      <td *ngFor="let val of row"> 
+        {{val}}
+      </td>
+</tr>
+  </table>
+</div>

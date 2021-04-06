@@ -17,4 +17,6 @@ import { ReadexcelDirective } from './directives/readexcel.directive';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+ }
