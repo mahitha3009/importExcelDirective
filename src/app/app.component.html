@@ -17,18 +17,13 @@
   </tbody>
 </table>
 -->
+
 <div >
-  <table> 
-    <p *ngIf ="readexcel.isPresent">
-      <th *ngFor="let h of readexcel.headers">
-      {{h}}
-      </th>
-    </p>
-       
-    <tr *ngFor="let row of readexcel.excelObservable | async">
-   
-      <td *ngFor="let val of row"> 
-        {{val}}
+  <table>        
+    <tr *ngFor="let row of readexcel.excelObservable | async; index as i">
+      <td *ngFor="let val of row; index as j"> 
+        <p *ngIf="i==0;else table_data">{{readexcel.headers[j]}}</p>
+        <ng-template #table_data>{{val}}</ng-template>
       </td>
 </tr>
   </table>
