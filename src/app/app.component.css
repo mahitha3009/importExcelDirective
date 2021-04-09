@@ -1,9 +1,9 @@
 /*table.imp > tbody > tr:first-child > td {
     background-color:darkgray;
 }*/
-p 
-{
-    background-color: darkgray;
-    color:black;
-    width:fit-content;
+table{
+    width:100%;
+}
+button{
+    display: inline-block;
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ReadexcelDirective } from './directives/readexcel.directive';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'importexcel';
+  public preview = false ;
   DataFromEventEmitter(data) {
     console.log(data);
+  }
+  loadpreview()
+  {
+    this.preview= true;
   }
 }

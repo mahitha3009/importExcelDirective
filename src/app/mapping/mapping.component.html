@@ -1,0 +1,14 @@
+<div appReadexcel #readexcel="readexcel">
+    <table mat-table class="mat-elevation-z8" >
+      <tr>
+        <th mat-header-cell> Headers</th>
+       <th mat-header-cell> Columns </th>
+      </tr>
+      <tr *ngFor="let h of readexcel.headers">
+
+        <td  mat-cell > {{h}} </td>
+        <td mat-cell> col1 </td>
+      </tr>
+    </table>
+</div>
+  
