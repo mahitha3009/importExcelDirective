@@ -11,14 +11,11 @@ import * as XLSX from 'xlsx';
 export class ReadexcelDirective {
   excelObservable: Observable<any>;
   @Output() eventEmitter = new EventEmitter();
-
-
+ 
    
- constructor() {
-
- }
-  
+ constructor() {}
   headers: Array <string> = ["Id","Description","Display pic","document attachments","Group", "location"," name", "price","product model number","purchased on"," Retire", "Retired on", "salvage value"," sub group","vendor"];
+  headersArray: Array <string> = [];
   @HostListener('change', ['$event.target'])
   onChange(target: HTMLInputElement) {
     const file = target.files[0];
@@ -55,16 +52,28 @@ export class ReadexcelDirective {
         return obj[key];
       });
     });
+    
+ 
     var keys = Object.keys(data[0]);
     output.unshift(keys);
 
     console.log("headers",keys);
     
-    //for( let j=0; j< keys.length; j++)
-    //{
-    //this.headerArray.push(keys[j]);
-    //}
-
+  for( let j=0; j< keys.length; j++)
+    {
+    this.headersArray.push(keys[j]);
+    }
+    /*let headersRow = this.getHeaderArray(keys);
+    getHeaderArray(keys) {
+      let headerArray = [];
+      for( let j=0; j< keys.length; j++)
+      {
+      headerArray.push(keys[j]);
+      }
+      return headerArray;
+    }*/
+    
+    console.log("headerarray" ,this.headers);
 console.log("data",output);
     subscriber.next(output);
     subscriber.complete();

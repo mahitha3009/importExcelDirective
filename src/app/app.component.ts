@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { ReadexcelDirective } from './directives/readexcel.directive';
 
 @Component({
@@ -17,3 +17,4 @@ export class AppComponent {
     this.preview= true;
   }
 }
+

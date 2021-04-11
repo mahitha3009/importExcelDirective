@@ -10,6 +10,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import { from } from 'rxjs';
 import { MappingComponent } from './mapping/mapping.component';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +24,8 @@ import { MappingComponent } from './mapping/mapping.component';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    ScrollingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
