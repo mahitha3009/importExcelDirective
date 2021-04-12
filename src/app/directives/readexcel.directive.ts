@@ -1,5 +1,5 @@
 import { createOfflineCompileUrlResolver } from '@angular/compiler';
-import { Directive, HostListener, Output, EventEmitter, ElementRef} from '@angular/core';
+import { Directive, HostListener, Output, EventEmitter, ElementRef, ɵCompiler_compileModuleAndAllComponentsSync__POST_R3__} from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import * as XLSX from 'xlsx';
 
@@ -15,7 +15,14 @@ export class ReadexcelDirective {
    
  constructor() {}
   headers: Array <string> = ["Id","Description","Display pic","document attachments","Group", "location"," name", "price","product model number","purchased on"," Retire", "Retired on", "salvage value"," sub group","vendor"];
-  headersArray: Array <string> = [];
+/*
+  for(let i=0; i < headers.length(); i++)
+  {
+    columns.push('col${i}');
+  }
+*/
+  myArray: Array <string> = [];
+
   @HostListener('change', ['$event.target'])
   onChange(target: HTMLInputElement) {
     const file = target.files[0];
@@ -25,8 +32,19 @@ export class ReadexcelDirective {
     });
 
     this.excelObservable.subscribe((d) => {
+      console.log("data",d);
       this.eventEmitter.emit(d);
     });
+  }
+
+  getHeaderArray(keys) {
+    let headerArray = [];
+    for( let j=0; j< keys.length; j++)
+    {
+    headerArray.push(keys[j]);
+    }
+    console.log("Hello",this.myArray);
+    return headerArray;
   }
 
   readFile(file: File, subscriber: Subscriber<any>) {
@@ -61,19 +79,11 @@ export class ReadexcelDirective {
     
   for( let j=0; j< keys.length; j++)
     {
-    this.headersArray.push(keys[j]);
+    this.myArray.push(keys[j]);
     }
-    /*let headersRow = this.getHeaderArray(keys);
-    getHeaderArray(keys) {
-      let headerArray = [];
-      for( let j=0; j< keys.length; j++)
-      {
-      headerArray.push(keys[j]);
-      }
-      return headerArray;
-    }*/
+     this.myArray = this.getHeaderArray(keys);
     
-    console.log("headerarray" ,this.headers);
+    console.log("headerarray" ,this.myArray);
 console.log("data",output);
     subscriber.next(output);
     subscriber.complete();

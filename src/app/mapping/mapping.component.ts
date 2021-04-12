@@ -12,5 +12,15 @@ export class MappingComponent implements OnInit {
   constructor() { }
   ngOnInit(): void {
   }
+ status: string ="h";
+ getvalue()
+ {
+   this.status="i";
+   return this.status;
 
+ }
+ DataFromEventEmitter(data)
+ {
+   console.log(data);
+ }
 }

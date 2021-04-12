@@ -1,4 +1,4 @@
-<div appReadexcel #readexcel="readexcel">
+<div appReadexcel #readexcel="readexcel" (eventEmitter)="DataFromEventEmitter($event)" >
     <table mat-table class="mat-elevation-z8" >
       <tr>
         <th mat-header-cell> Headers</th>
