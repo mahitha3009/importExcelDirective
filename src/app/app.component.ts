@@ -19,13 +19,14 @@ export class AppComponent {
   {
     this.preview= true;
   }
- openDialog() 
+ openDialog(readexcel) 
   {
   //const dialogConfig= new MatDialogConfig();
   // dialogConfig.width="70%";
     let dialogRef = this.dialog.open( MappingComponent,{
       width: '700px',
-      height:'600px'
+      height:'600px',
+      data: readexcel
     });
     dialogRef.afterClosed().subscribe(result =>
       {

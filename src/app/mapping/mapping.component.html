@@ -13,12 +13,12 @@
       </tr>
     </table>
 
-    <div appReadexcel #readexcel="readexcel">
+    <div>
     <div *ngIf="readexcel.excelObservable"> 
       <button (click)="loadpreview();" mat-raised-button color="primary"> Preview </button>
       </div>
     
-
+     <div *ngIf="preview">
       <div class="cdk-virtual-scroll-data-source-example">
        <cdk-virtual-scroll-viewport  itemSize="50" class="example-viewport"> 
       
@@ -26,8 +26,8 @@
         <tbody>
         <tr *ngFor="let row of readexcel.excelObservable | async; index as i">
           <td  *ngFor="let val of row; index as j">
-          <p  *ngIf ="i==0; else table_data" > {{readexcel.headers[j]}} </p>
-           <ng-template #table_data>{{val}} </ng-template>
+          <p *ngIf ="i==0; else table_data" > {{readexcel.headers[j]}} </p>
+           <ng-template #table_data> {{val}} </ng-template>
           </td>
         </tr>
       </tbody>
@@ -35,10 +35,10 @@
       </cdk-virtual-scroll-viewport> 
       </div>
     </div>
-  
+  </div>
 </mat-dialog-content>
 <div mat-dialog-actions>
-  <button mat-button (click)="openDialog()" >Preview</button>
+ <!-- <button mat-button  >Preview</button> -->
   <button mat-button mat-dialog-close mat-dialog-close="false">close </button>
 </div>
 

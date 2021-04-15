@@ -13,13 +13,12 @@ import { from } from 'rxjs';
 import { MappingComponent } from './mapping/mapping.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {HeadersService} from './headers.service';
-import { PreviewComponent } from './preview/preview.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     ReadexcelDirective,
     MappingComponent,
-    PreviewComponent,
   ],
   imports: [
     BrowserModule,
