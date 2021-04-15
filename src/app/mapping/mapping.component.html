@@ -13,7 +13,7 @@
       </tr>
     </table>
 
-    <div appReadexcel >
+    <div appReadexcel #readexcel="readexcel">
     <div *ngIf="readexcel.excelObservable"> 
       <button (click)="loadpreview();" mat-raised-button color="primary"> Preview </button>
       </div>
