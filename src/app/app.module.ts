@@ -8,14 +8,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { from } from 'rxjs';
 import { MappingComponent } from './mapping/mapping.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import {HeadersService} from './headers.service';
+import { PreviewComponent } from './preview/preview.component';
 @NgModule({
   declarations: [
     AppComponent,
     ReadexcelDirective,
     MappingComponent,
+    PreviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,9 +29,13 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     ReactiveFormsModule,
     MatSelectModule,
     MatButtonModule,
-    ScrollingModule
+    ScrollingModule,
+    MatDialogModule
   ],
-  providers: [],
+  entryComponents: [
+   MappingComponent
+  ],
+  providers: [HeadersService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

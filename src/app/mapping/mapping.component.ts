@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ReadexcelDirective } from '../directives/readexcel.directive';
 import { Input } from '@angular/core';
+import { HeadersService } from '../headers.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
+import {AppComponent} from '../app.component';
+import {PreviewComponent} from '../preview/preview.component';
 
 @Component({
   selector: 'app-mapping',
@@ -8,19 +12,27 @@ import { Input } from '@angular/core';
   styleUrls: ['./mapping.component.css']
 })
 export class MappingComponent implements OnInit {
-  @Input() headers: string[];
-  constructor() { }
+  public headers = [];
+  public preview = false ;
+  constructor(private  _headersService: HeadersService, public dialog :MatDialog) { }
   ngOnInit(): void {
+    this.headers=this._headersService.getHeaders();
   }
- status: string ="h";
- getvalue()
- {
-   this.status="i";
-   return this.status;
-
- }
  DataFromEventEmitter(data)
  {
    console.log(data);
  }
+ loadpreview()
+ {
+   this.preview= true;
+ }
+ openDialog() 
+  {
+  //const dialogConfig= new MatDialogConfig();
+  // dialogConfig.width="70%";
+    let dialogRef = this.dialog.open( PreviewComponent,{
+      width: '700px',
+      height:'600px'
+    });
+}
 }

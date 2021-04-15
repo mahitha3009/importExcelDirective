@@ -2,24 +2,14 @@
 
      <div class="button-wrapper">
        <span class="label"> choose file </span>
-<input type="file" id="upload" name="upload" class="upload-box" appReadexcel  #readexcel="readexcel" (eventEmitter)="DataFromEventEmitter($event)" />
+<input type="file" id="upload" name="upload" class="upload-box" appReadexcel  #readexcel="readexcel" (eventEmitter)="DataFromEventEmitter($event)"  />
 
 </div>
-
-<app-mapping *ngIf="readexcel.excelObservable"> </app-mapping>
+ 
+<button *ngIf="readexcel.excelObservable" mat-raised-button (click)="openDialog()">Mapping</button> 
 <!--
-<div>
-  <table class="up">
-    <tr>
-      <th> Headers</th>
-     <th> Columns </th>
-    </tr>
-    <tr *ngFor= "let head of readexcel.headers">
-      <td >{{head}} </td>
-    </tr>
-  </table>
-</div>
--->
+<app-mapping *ngIf="readexcel.excelObservable"> </app-mapping> -->
+
 <!--
 <table mat-table class="mat-elevation-z8">
 
@@ -67,26 +57,11 @@
 </div>
 
 -->
-
+<!--
 <div *ngIf="readexcel.excelObservable"> 
 <button (click)="loadpreview();" mat-raised-button color="primary"> Preview </button>
 </div>
-<!--
-<div *ngIf="preview"> 
-  <div class="cdk-virtual-scroll-data-source-example">
-  <cdk-virtual-scroll-viewport  itemSize="50" class="example-viewport">
-<table mat-table class="mat-elevation-z8">
-  <ng-container>
-    <tr *ngFor="let row of readexcel.excelObservable | async">  
-    <td mat-cell *ngFor="let val of row"> {{val}} 
-    </td>
-    </tr>
-  </ng-container>
-</table>
-</cdk-virtual-scroll-viewport>
-</div>
-</div>
--->
+
 <div *ngIf="preview"> 
 <div class="cdk-virtual-scroll-data-source-example">
   <cdk-virtual-scroll-viewport  itemSize="50" class="example-viewport">
@@ -104,3 +79,26 @@
 </cdk-virtual-scroll-viewport>
 </div>
 </div>
+-->
+
+<div *ngIf="readexcel.excelObservable"> 
+  <button (click)="loadpreview();" mat-raised-button color="primary"> Preview </button>
+  </div>
+
+  <div *ngIf="preview"> 
+  <div class="cdk-virtual-scroll-data-source-example">
+    <cdk-virtual-scroll-viewport  itemSize="50" class="example-viewport">
+  
+  <table class="table table-striped">  
+    <tbody>
+    <tr *ngFor="let row of readexcel.excelObservable | async; index as i">
+      <td  *ngFor="let val of row; index as j">
+      <p  *ngIf ="i==0; else table_data" > {{readexcel.headers[j]}} </p>
+      <ng-template #table_data> {{val}} </ng-template>
+      </td>
+    </tr>
+  </tbody>
+  </table>
+  </cdk-virtual-scroll-viewport>
+  </div>
+  </div>

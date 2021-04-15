@@ -2,14 +2,14 @@
     background-color:darkgray;
 }*/
 table{
-    width:100%;
+    width:50%;
 }
 button{
     display: inline-block;
 }
 .cdk-virtual-scroll-data-source-example .example-viewport {
-    height: 500px;
-    width: 900px;
+    height: 400px;
+    width: 500px;
     border: 1px solid black;
     margin: 2%;
   }
