@@ -24,8 +24,8 @@ export class AppComponent {
   //const dialogConfig= new MatDialogConfig();
   // dialogConfig.width="70%";
     let dialogRef = this.dialog.open( MappingComponent,{
-      width: '700px',
-      height:'600px',
+      width: '800px',
+      height:'800px',
       data: readexcel
     });
     dialogRef.afterClosed().subscribe(result =>

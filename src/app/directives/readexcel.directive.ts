@@ -15,6 +15,7 @@ export class ReadexcelDirective {
    
  constructor() {}
  headers: Array <string> = ["Id","Description","Display pic","document attachments","Group", "location"," name", "price","product model number","purchased on"," Retire", "Retired on", "salvage value"," sub group","vendor"];
+ columns: Array <string> =["col1","col2","col3","col4","col5","col6","col7","col8","col9","col10","col11","col12","col13","col14","col15"];
  //columns : Array <string> =[];
 
 

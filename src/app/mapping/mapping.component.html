@@ -1,17 +1,58 @@
 
-  <mat-dialog-content class="mat-typography" >
+<mat-dialog-content class="mat-typography" >
 <h2 mat-dialog-title> Mapping </h2>
 
-    <table mat-table class="mat-elevation-z8">
+    <!--<table mat-table class="mat-elevation-z8">
       <tr>
         <th mat-header-cell> Headers</th>
        <th mat-header-cell> Columns </th>
       </tr>
       <tr *ngFor="let h of headers">
         <td  mat-cell > {{h.header}} </td>
-        <td mat-cell> {{h.column}} </td>
+        <td mat-cell > {{h.column}} </td>
       </tr>
+    </table>--> 
+    <table class="table"  style="float: left">
+      <thead>
+        <tr>
+          <th scope="col">header</th>
+        </tr>
+      </thead>
+      <tbody  >
+        <tr *ngFor="let h of readexcel.headers">
+          <td >{{h}}</td>
+        </tr>
+      </tbody>
     </table>
+    <table class="table"  style="float: left">
+      <thead>
+        <tr>
+          <th scope="col">column</th>
+        </tr>
+      </thead>
+      <tbody cdkDropList (cdkDropListDropped)="drop($event)" >
+        <tr *ngFor="let c of headers" >
+          <td cdkDrag cdkDragLockAxis="y" >{{ c.column }}</td>
+        </tr>
+      </tbody>
+    </table>
+  <!--
+  <table mat-table [dataSource]="headers" class="mat-elevation-z8" cdkDropList  [cdkDropListData]="headers"
+  (cdkDropListDropped)="drop($event)">
+ 
+  <ng-container matColumnDef="header">
+    <mat-header-cell *matHeaderCellDef> Headers </mat-header-cell>
+    <mat-cell *matCellDef="let element "> {{element.header}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="column">
+    <mat-header-cell *matHeaderCellDef> Columns </mat-header-cell>
+    <mat-cell *matCellDef="let element "> {{element.column}} </mat-cell>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" cdkDragLockAxis="y" cdkDrag [cdkDragData]="row">
+  </tr>
+</table>-->
 
     <div>
     <div *ngIf="readexcel.excelObservable"> 

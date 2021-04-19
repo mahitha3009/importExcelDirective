@@ -13,6 +13,11 @@ import { from } from 'rxjs';
 import { MappingComponent } from './mapping/mapping.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {HeadersService} from './headers.service';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+  import {MatTableModule} from '@angular/material/table';
+  import {CdkTableModule} from '@angular/cdk/table';
+  import {CdkTreeModule} from '@angular/cdk/tree';
+  import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -29,7 +34,11 @@ import {HeadersService} from './headers.service';
     MatSelectModule,
     MatButtonModule,
     ScrollingModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule,
+    CdkTableModule,
+    CdkTreeModule,
+    DragDropModule
   ],
   entryComponents: [
    MappingComponent

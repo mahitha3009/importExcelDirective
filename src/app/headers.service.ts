@@ -9,7 +9,9 @@ export class HeadersService {
   getHeaders()
   {
     return [
-      {"column" : "col1" , "header": "ID"},
+    /* let headers = ["Id","Description","Display pic","document attachments","Group", "location"," name", "price","product model number","purchased on"," Retire", "Retired on", "salvage value"," sub group","vendor"];*/
+     
+     {"column" : "col1" , "header": "ID"},
       {"column" : "col2" , "header": "Description"},
       {"column" : "col3" , "header": "Display pic"},
       {"column" : "col4" , "header": "document attachments"},
@@ -19,10 +21,10 @@ export class HeadersService {
       {"column" : "col8" , "header": "price"},
       {"column" : "col9" , "header": "product model number"},
       {"column" : "col10" , "header": "purchased on"},
-      {"column" : "col11" , "header": " Retire"},
+      {"column" : "col11" , "header": "Retire"},
       {"column" : "col12" , "header": "Retired on"},
       {"column" : "col13" , "header": "salvage value"},
-      {"column" : "col14" , "header": " sub group"},
+      {"column" : "col14" , "header": "sub group"},
       {"column" : "col15" , "header": "vendor"},
     ];
   }
