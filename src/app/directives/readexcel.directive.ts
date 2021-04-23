@@ -1,7 +1,8 @@
 import { createOfflineCompileUrlResolver } from '@angular/compiler';
-import { Directive, HostListener, Output, EventEmitter, ElementRef, ɵCompiler_compileModuleAndAllComponentsSync__POST_R3__} from '@angular/core';
+import { Directive, HostListener, Output, EventEmitter, Inject, ElementRef, ɵCompiler_compileModuleAndAllComponentsSync__POST_R3__} from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import * as XLSX from 'xlsx';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
 
 @Directive({
   selector: '[appReadexcel]',
@@ -33,7 +34,7 @@ export class ReadexcelDirective {
   @HostListener('change', ['$event.target'])
   onChange(target: HTMLInputElement) {
     const file = target.files[0];
-
+ 
     this.excelObservable = new Observable((subscriber: Subscriber<any>) => {
       this.readFile(file, subscriber);
     });

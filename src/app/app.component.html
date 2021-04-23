@@ -2,11 +2,11 @@
 
      <div class="button-wrapper">
        <span class="label"> choose file </span>
-<input type="file" id="upload" name="upload" class="upload-box" appReadexcel  #readexcel="readexcel" (eventEmitter)="DataFromEventEmitter($event)"  />
+<input type="file" id="upload" name="upload" class="upload-box" appReadexcel  #readexcel="readexcel" (eventEmitter)="DataFromEventEmitter($event)" (click)="openDialog(readexcel)" />
 
 </div>
  
-<button *ngIf="readexcel.excelObservable" mat-raised-button color="primary" (click)="openDialog(readexcel)">Mapping</button> 
+<!--<button *ngIf="readexcel.excelObservable" mat-raised-button color="primary" (click)="openDialog(readexcel)">Mapping</button> -->
 <!--
 <app-mapping *ngIf="readexcel.excelObservable"> </app-mapping> -->
 
