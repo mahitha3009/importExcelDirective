@@ -9,7 +9,6 @@ export class HeadersService {
   getHeaders()
   {
     return [
-    /* let headers = ["Id","Description","Display pic","document attachments","Group", "location"," name", "price","product model number","purchased on"," Retire", "Retired on", "salvage value"," sub group","vendor"];*/
      
      {"column" : "col1" , "header": "ID"},
       {"column" : "col2" , "header": "Description"},

@@ -1,5 +1,4 @@
- 
-  @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
 table td th{
     text-align: center;
     padding: 1%;
@@ -113,4 +112,3 @@ button{
 .previewtable{
   display: inline-block;
 }
-

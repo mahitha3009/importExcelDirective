@@ -1,86 +1,52 @@
-
-<mat-dialog-content class="mat-typography" >
+<mat-dialog-content class="mat-typography">
   <div class="mappingdiv">
-<h2 mat-dialog-title> Mapping </h2>
-
-    <!--<table mat-table class="mat-elevation-z8">
-      <tr>
-        <th mat-header-cell> Headers</th>
-       <th mat-header-cell> Columns </th>
-      </tr>
-      <tr *ngFor="let h of headers">
-        <td  mat-cell > {{h.header}} </td>
-        <td mat-cell > {{h.column}} </td>
-      </tr>
-    </table>--> 
-    <div *ngIf="readexcel.excelObservable"> 
+    <h2 mat-dialog-title> Mapping </h2>
+    <div>
       <button (click)="loadpreview();" mat-raised-button color="primary"> Preview </button>
-      </div>
-    <table class="table"  style="float: left">
+    </div>
+    <table class="table" style="float: left">
       <thead>
         <tr>
           <th scope="col">header</th>
         </tr>
       </thead>
-      <tbody  >
-        <tr *ngFor="let h of readexcel.headers">
-          <td >{{h}}</td>
+      <tbody>
+        <tr *ngFor="let h of headers">
+          <td>{{h.header}}</td>
         </tr>
       </tbody>
     </table>
-    <table class="table"  style="float: left">
+    <table class="table" style="float: left">
       <thead>
         <tr>
           <th scope="col">column</th>
         </tr>
       </thead>
-      <tbody cdkDropList (cdkDropListDropped)="drop($event)" >
-        <tr *ngFor="let c of headers" >
-          <td cdkDrag cdkDragLockAxis="y" >{{ c.column }}</td>
+      <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+        <tr *ngFor="let c of headers">
+          <td cdkDrag cdkDragLockAxis="y">{{ c.column }}</td>
         </tr>
       </tbody>
     </table>
-    
+
   </div>
-  <!--
-  <table mat-table [dataSource]="headers" class="mat-elevation-z8" cdkDropList  [cdkDropListData]="headers"
-  (cdkDropListDropped)="drop($event)">
- 
-  <ng-container matColumnDef="header">
-    <mat-header-cell *matHeaderCellDef> Headers </mat-header-cell>
-    <mat-cell *matCellDef="let element "> {{element.header}} </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="column">
-    <mat-header-cell *matHeaderCellDef> Columns </mat-header-cell>
-    <mat-cell *matCellDef="let element "> {{element.column}} </mat-cell>
-  </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" cdkDragLockAxis="y" cdkDrag [cdkDragData]="row">
-  </tr>
-</table>-->
+  <div class="previewtable" *ngIf="preview">
+    <div class="cdk-virtual-scroll-data-source-example">
+      <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
 
-     <div class="previewtable" *ngIf="preview">
-      <div class="cdk-virtual-scroll-data-source-example">
-       <cdk-virtual-scroll-viewport  itemSize="50" class="example-viewport"> 
-      
-      <table class="table table-striped">  
-        <tbody>
-        <tr *ngFor="let row of readexcel.excelObservable | async; index as i">
-          <td  *ngFor="let val of row; index as j">
-         <!-- <p *ngIf ="i==0; else table_data" > {{readexcel.headers[j]}} </p>-->
-           <ng-template #table_data> {{val}} </ng-template>
-          </td>
-        </tr>
-      </tbody>
-      </table>
-      </cdk-virtual-scroll-viewport> 
-      </div>
+        <table class="table table-striped">
+          <tbody>
+            <tr *ngFor="let row of data; index as i">
+              <td *ngFor="let val of row; index as j">
+                <p *ngIf="i==0; else table_data"> {{val}} </p>
+                <ng-template #table_data> {{val}} </ng-template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </cdk-virtual-scroll-viewport>
     </div>
-  
+  </div> 
+
 </mat-dialog-content>
-<!--<mat-dialog-actions>
-  <button mat-button mat-dialog-close mat-dialog-close="false">close </button>
-</mat-dialog-actions>-->
-
-

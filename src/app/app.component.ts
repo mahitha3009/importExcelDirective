@@ -1,10 +1,6 @@
-import { Component, EventEmitter, Inject } from '@angular/core';
-import { ReadexcelDirective } from './directives/readexcel.directive';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
+import { Component} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import { MappingComponent } from './mapping/mapping.component';
-import { delay } from 'rxjs/operators';
-import { fromEvent } from 'rxjs';
-import {Observable, Subscriber} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,34 +9,29 @@ import {Observable, Subscriber} from 'rxjs';
 })
 export class AppComponent {
   constructor(public dialog :MatDialog) {}
-  public readexcel;
   title = 'importexcel';
   public preview = false ;
   public display = false;
  
   DataFromEventEmitter(data) {
-    console.log(data);
     this.display= true;
+    this.openDialog(data);
   }
   loadpreview()
   {
     this.preview= true;
   }
-//setTimeout(openDialog(ReadexcelDirective),3000);
- openDialog(readexcel) 
+ openDialog(data) 
   {
-  //const dialogConfig= new MatDialogConfig();
-  // dialogConfig.width="70%";
     let dialogRef = this.dialog.open( MappingComponent,{
       width: '1000px',
       height:'600px',
-      data: readexcel
+      data: data
     });
     dialogRef.afterClosed().subscribe(result =>
       {
-        console.log(`Dialog result: ${result}`);
+        // console.log(`Dialog result: ${result}`);
       });
   }
   
 }
-
