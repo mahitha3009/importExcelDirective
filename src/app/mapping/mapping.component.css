@@ -5,72 +5,57 @@ table td th{
     font-size: small;
 }
 
-/*table.imp > tbody > tr:first-child > td {
-    background-color:darkgray;
-}*/
 table{
-    width:50%;
-    display: inline-block;
+    width:fit-content;
+    display: block;
+    float:left;
 }
+th { 
+	background: #3498db; 
+	color: white; 
+	font-weight: bold; 
+	}
+  td{
+    text-align: center;
+  }
+.mappingdiv
+{
+  margin-right: 5%;
+  float:left;
+  width: fit-content;
+  height: 320px;
+  overflow-y: scroll;
+}
+.previewtable
+{
+  width:600px;
+  overflow-x:scroll;
+  display: inline-block;
+  height:fit-content;
+}
+.comment
+{
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+  margin-top: 5px;
+  float:left;
+  display: block;
+}
+/*.whole
+{
+  position: relative;
+}*/
+
+/*
 button{
-    display:block;
+    display: inline-block;
+    margin-top: 1%;
 }
-.cdk-virtual-scroll-data-source-example .example-viewport {
-    height: 400px;
-    width: 500px;
-    border: 1px solid black;
-    margin: 2%;
-  }
-  
-  .cdk-virtual-scroll-data-source-example .example-viewport .cdk-virtual-scroll-content-wrapper {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .cdk-virtual-scroll-data-source-example  {
-    width: 50px;
-    height: 100%;
-   /* writing-mode: vertical-lr;*/
-  }
+*/
 
-.example-box {
-  padding: 20px 10px;
-  border-bottom: solid 1px #ccc;
-  color: rgba(0, 0, 0, 0.87);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  cursor: move;
-  background: white;
-  font-size: 14px;
-}
-
-.cdk-drag-preview {
-  box-sizing: border-box;
-  border-radius: 4px;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-              0 8px 10px 1px rgba(0, 0, 0, 0.14),
-              0 3px 14px 2px rgba(0, 0, 0, 0.12);
-}
-
-.cdk-drag-placeholder {
-  opacity: 0;
-}
-
-.cdk-drag-animating {
+.cdk-drop-list-dragging {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-
-.example-box:last-child {
-  border: none;
-}
-
-.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
 
 .cdk-drag-preview {
   box-sizing: border-box;
@@ -88,23 +73,15 @@ button{
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-
-.example-box:last-child {
-  border: none;
+.throw{
+  font-weight: bold;
 }
-
-.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+button{
+  float:right;
+  margin-top: -10px;
 }
+/*
 
-
-.mappingdiv  {
-  height: 200px;
-  width: 400px;
-  display:block;
-
-  
-}
 .mappingdiv tr{
   width: 2%;
   height: 2%;
@@ -112,3 +89,36 @@ button{
 .previewtable{
   display: inline-block;
 }
+.maptable th td{
+  text-align: center;
+}
+
+.custom-dialog-container .mat-dialog-content {
+  padding: 0px;
+}
+.mat-dialog-content
+{
+  overflow: unset;
+}
+p
+{
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+}
+.previewbuttdiv
+{
+  margin-bottom: 4px;
+  margin-top: -280px;
+  margin-left: 420px;
+}
+.previewtable{
+  margin-top: auto;
+  margin-left: 410px;
+}
+.table td, .table th {
+  padding: .75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+  text-align: center;
+}
+*/

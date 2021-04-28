@@ -26,6 +26,7 @@ export class AppComponent {
     let dialogRef = this.dialog.open( MappingComponent,{
       width: '1000px',
       height:'600px',
+     panelClass: 'custom-dialog-container',
       data: data
     });
     dialogRef.afterClosed().subscribe(result =>

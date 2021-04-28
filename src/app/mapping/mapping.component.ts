@@ -12,11 +12,13 @@ import { CdkDragDrop} from '@angular/cdk/drag-drop';
 export class MappingComponent implements OnInit {
   public headers = [];
   public preview = false;
+  public newdata;
   displayedColumns: string[] = ["header", "column"];
   constructor(private _headersService: HeadersService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data) { }
 
   ngOnInit(): void {
     this.headers = this._headersService.getHeaders();
+    this.newdata=this.data.slice(0,6);
   }
 
 
@@ -35,9 +37,9 @@ export class MappingComponent implements OnInit {
 
     let prevCol = event.previousIndex;
     let currCol = event.currentIndex;
-    for(let i=0; i<this.data.length; i++){
-      let temp = this.data[i][prevCol];
-      this.data[i][prevCol] = this.data[i][currCol];
+    for(let i=0; i<this.newdata.length; i++){
+      let temp = this.newdata[i][prevCol];
+      this.newdata[i][prevCol] = this.newdata[i][currCol];
       this.data[i][currCol] = temp;
     }
   }

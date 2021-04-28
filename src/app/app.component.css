@@ -60,3 +60,10 @@ button{
     opacity: 0;
     cursor: pointer;
 }
+/*.custom-dialog-container .mat-dialog-content {
+  padding: 0px;
+}*/
+/*.mat-dialog-content
+{
+  overflow: unset;
+}*/

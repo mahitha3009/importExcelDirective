@@ -1,40 +1,36 @@
 <mat-dialog-content class="mat-typography">
+  <div class="whole">
+  <!--<h2 mat-dialog-title> Mapping </h2>-->
+  <h1> Mapping </h1>
   <div class="mappingdiv">
-    <h2 mat-dialog-title> Mapping </h2>
-    <div>
-      <button (click)="loadpreview();" mat-raised-button color="primary"> Preview </button>
-    </div>
-    <table class="table" style="float: left">
-      <thead>
+    <table class="table">
         <tr>
-          <th scope="col">header</th>
+          <th scope="col">Headers</th>
         </tr>
-      </thead>
-      <tbody>
+ 
         <tr *ngFor="let h of headers">
           <td>{{h.header}}</td>
         </tr>
-      </tbody>
     </table>
-    <table class="table" style="float: left">
-      <thead>
+    <table class="table" id="col">
         <tr>
-          <th scope="col">column</th>
+          <th scope="col">Columns</th>
         </tr>
-      </thead>
       <tbody cdkDropList (cdkDropListDropped)="drop($event)">
         <tr *ngFor="let c of headers">
           <td cdkDrag cdkDragLockAxis="y">{{ c.column }}</td>
         </tr>
-      </tbody>
+        </tbody>
     </table>
-
   </div>
 
-  <div class="previewtable" *ngIf="preview">
+  <div class="previewbuttdiv">
+    <button (click)="loadpreview();" mat-raised-button color="primary"> Preview </button>
+  </div>
+
+  <!--<div class="previewtable" *ngIf="preview">
     <div class="cdk-virtual-scroll-data-source-example">
       <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-
         <table class="table table-striped">
           <tbody>
             <tr *ngFor="let row of data; index as i">
@@ -47,6 +43,30 @@
         </table>
       </cdk-virtual-scroll-viewport>
     </div>
-  </div> 
+  </div>-->
+  <!--
+  <div class="previewtable" *ngIf="preview">
+        <table class="table table-striped">
+            <tr *ngFor="let row of data; index as i">
+             <div *ngIf="i<6">
+              <td *ngFor="let val of row">
+                {{val}} 
+              </td>
+            </div>
+            </tr>
+        </table>
+</div>-->
+<div class="previewtable" *ngIf="preview">
+      <table class="table table-striped">
+          <tr *ngFor="let row of newdata; index as i">
+            <td *ngFor="let val of row">
+              <p class="throw" *ngIf="i==0; else table_data"> {{val}} </p>
+              <ng-template #table_data> {{val}} </ng-template>
+            </td>
+          </tr>
+      </table>
+</div>
+<p class="comment"> Drag and drop the column values to the respective header values and preview the result in the table</p>
+</div>
 
 </mat-dialog-content>
