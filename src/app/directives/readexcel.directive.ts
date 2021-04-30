@@ -1,5 +1,4 @@
-import { createOfflineCompileUrlResolver } from '@angular/compiler';
-import { Directive, HostListener, Output, EventEmitter, Inject, ElementRef, ɵCompiler_compileModuleAndAllComponentsSync__POST_R3__} from '@angular/core';
+import { Directive, HostListener, Input, Output, EventEmitter, Inject, ElementRef} from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import * as XLSX from 'xlsx';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
@@ -13,24 +12,10 @@ export class ReadexcelDirective {
   excelObservable: Observable<any>;
   @Output() eventEmitter = new EventEmitter();
  
+ public keys;
    
- constructor() {}
- headers: Array <string> = ["Id","Description","Display pic","document attachments","Group", "location"," name", "price","product model number","purchased on"," Retire", "Retired on", "salvage value"," sub group","vendor"];
- columns: Array <string> =["col1","col2","col3","col4","col5","col6","col7","col8","col9","col10","col11","col12","col13","col14","col15"];
- //columns : Array <string> =[];
-
-
-// var columns:string[];
-
-
- /*for(let i=0; i < headers.length(); i++)
-  {
-    columns.push('col'+{i} );
-      
-  }
-*/
-  headerArray: Array <string> = [];
-
+ constructor(private elementRef: ElementRef) {}
+ @Input() headerArray : [];
   @HostListener('change', ['$event.target'])
   onChange(target: HTMLInputElement) {
     const file = target.files[0];
@@ -44,18 +29,7 @@ export class ReadexcelDirective {
     });
   }
 
- /* getHeaderArray(keys) {
-    let headerArray = [];
-    for( let j=0; j< keys.length; j++)
-    {
-    headerArray.push(keys[j]);
-    }
-    console.log("Hello",this.myArray);
-    return headerArray;
-  }*/
-
   readFile(file: File, subscriber: Subscriber<any>) {
-    
     const fileReader = new FileReader();
     var Ext= file.name.split('.')[1]; 
     console.log(Ext);
@@ -79,17 +53,11 @@ export class ReadexcelDirective {
     });
     
  
-    var keys = Object.keys(data[0]);
-    output.unshift(keys);
+    this.keys = Object.keys(data[0]);
+    output.unshift(this.keys);
 
-    console.log("headers",keys);
+    console.log("headers",this.keys);
     
-  for( let j=0; j< keys.length; j++)
-    {
-    this.headerArray.push(keys[j]);
-    }
-   
-    console.log("headerarray" ,this.headerArray);
 console.log("data",output);
     subscriber.next(output);
     subscriber.complete();

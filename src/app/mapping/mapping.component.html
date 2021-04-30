@@ -11,7 +11,7 @@
         </tr>
  
         <tr *ngFor="let h of headers">
-          <td>{{h.header}}</td>
+          <td>{{h}}</td>
         </tr>
     </table>
     <table class="table" id="col">
@@ -19,8 +19,8 @@
           <th scope="col">Columns</th>
         </tr>
       <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-        <tr *ngFor="let c of headers">
-          <td cdkDrag cdkDragLockAxis="y">{{ c.column }}</td>
+        <tr *ngFor="let c of columns">
+          <td cdkDrag cdkDragLockAxis="y">{{ c }}</td>
         </tr>
         </tbody>
     </table>
@@ -30,34 +30,6 @@
     <button (click)="loadpreview();" mat-raised-button color="primary"> Preview </button>
   </div>
 
-  <!--<div class="previewtable" *ngIf="preview">
-    <div class="cdk-virtual-scroll-data-source-example">
-      <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-        <table class="table table-striped">
-          <tbody>
-            <tr *ngFor="let row of data; index as i">
-              <td *ngFor="let val of row; index as j">
-                <p *ngIf="i==0; else table_data"> {{val}} </p>
-                <ng-template #table_data> {{val}} </ng-template>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </cdk-virtual-scroll-viewport>
-    </div>
-  </div>-->
-  <!--
-  <div class="previewtable" *ngIf="preview">
-        <table class="table table-striped">
-            <tr *ngFor="let row of data; index as i">
-             <div *ngIf="i<6">
-              <td *ngFor="let val of row">
-                {{val}} 
-              </td>
-            </div>
-            </tr>
-        </table>
-</div>-->
 <div class="previewtable" *ngIf="preview">
       <table class="table table-striped">
           <tr *ngFor="let row of newdata; index as i">

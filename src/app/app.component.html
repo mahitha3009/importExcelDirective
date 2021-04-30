@@ -3,3 +3,7 @@
      <div class="button-wrapper">
        <span class="label"> choose file </span>
 <input type="file" id="upload" name="upload" class="upload-box" appReadexcel  #readexcel="readexcel" (eventEmitter)="DataFromEventEmitter($event)" />
+</div>
+<p> Enter headers </p>
+<input type="text" #headerinput (keyup.enter)="keyup(headerinput.value)" [headerArray] = "headArr"/>
+

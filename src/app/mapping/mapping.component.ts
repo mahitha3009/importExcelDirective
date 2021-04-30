@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input} from '@angular/core';
 import { HeadersService } from '../headers.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CdkDragDrop} from '@angular/cdk/drag-drop';
@@ -11,13 +11,21 @@ import { CdkDragDrop} from '@angular/cdk/drag-drop';
 })
 export class MappingComponent implements OnInit {
   public headers = [];
+  public headerArray= [];
+  public columns=[];
   public preview = false;
   public newdata;
+  public values;
   displayedColumns: string[] = ["header", "column"];
-  constructor(private _headersService: HeadersService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data) { }
+ 
+  constructor(private _headersService: HeadersService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data) {
+  
+   }
 
   ngOnInit(): void {
-    this.headers = this._headersService.getHeaders();
+    this.values = this._headersService.getheaders(this.headerArray);
+    this.headers=this.values[0];
+    this.columns=this.values[1];
     this.newdata=this.data.slice(0,6);
   }
 
@@ -31,16 +39,16 @@ export class MappingComponent implements OnInit {
 
 
   drop(event: CdkDragDrop<string[]>) {
-    let oldtarget = this.headers[event.previousIndex].column;
-    this.headers[event.previousIndex].column = this.headers[event.currentIndex].column;
-    this.headers[event.currentIndex].column = oldtarget;
-
+    let oldtarget = this.headers[event.previousIndex];
+    this.headers[event.previousIndex] = this.headers[event.currentIndex];
+    this.headers[event.currentIndex] = oldtarget;
     let prevCol = event.previousIndex;
     let currCol = event.currentIndex;
     for(let i=0; i<this.newdata.length; i++){
       let temp = this.newdata[i][prevCol];
       this.newdata[i][prevCol] = this.newdata[i][currCol];
       this.data[i][currCol] = temp;
+
     }
   }
 

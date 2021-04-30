@@ -1,14 +1,46 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subscriber } from 'rxjs';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeadersService {
-
-  constructor() { }
-  getHeaders()
+  constructor() {} 
+   public headers;
+   public columns=[];
+   getheaders(data)
+   {
+    //console.log(data);
+    this.headers=data;
+   for(let i=1;i<=this.headers.length;i++)
+   {
+           this.columns.push(`col${i}`);
+   }
+   //console.log(this.columns);
+   return [
+     this.headers,
+     this.columns
+   ];
+  }
+  /*myMethod(data)
   {
+    console.log(data);
+    this.headers=data;
+    this.myMethodSubject.next(data);
+
+    console.log(this.headers);
+    for(let i=1;i<=this.headers.length;i++)
+    {
+     this.columns.push(`col${i}`);
+    }
+    console.log(this.columns);
     return [
+      this.headers, this.columns
+    ]
+  }*/
+
+   /* return [
      
      {"column" : "col1" , "header": "ID"},
       {"column" : "col2" , "header": "Description"},
@@ -25,6 +57,6 @@ export class HeadersService {
       {"column" : "col13" , "header": "salvage value"},
       {"column" : "col14" , "header": "sub group"},
       {"column" : "col15" , "header": "vendor"},
-    ];
+    ];*/
   }
-}
+
