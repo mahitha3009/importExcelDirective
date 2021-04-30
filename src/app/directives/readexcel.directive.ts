@@ -11,11 +11,14 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angula
 export class ReadexcelDirective {
   excelObservable: Observable<any>;
   @Output() eventEmitter = new EventEmitter();
- 
+ @Input() name : string;
  public keys;
-   
  constructor(private elementRef: ElementRef) {}
- @Input() headerArray : [];
+ @Input() headerArray = [];
+ ngOnInit() {
+  console.log(this.headerArray);
+}
+
   @HostListener('change', ['$event.target'])
   onChange(target: HTMLInputElement) {
     const file = target.files[0];

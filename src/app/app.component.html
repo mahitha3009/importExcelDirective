@@ -5,5 +5,6 @@
 <input type="file" id="upload" name="upload" class="upload-box" appReadexcel  #readexcel="readexcel" (eventEmitter)="DataFromEventEmitter($event)" />
 </div>
 <p> Enter headers </p>
-<input type="text" #headerinput (keyup.enter)="keyup(headerinput.value)" [headerArray] = "headArr"/>
+<input type="text" #headerinput (keyup.enter)="keyup(headerinput.value)" appReadexcel [headerArray]="headArr" />
+<!--<div appReadexcel [headerArray]="headArr"></div>-->
 

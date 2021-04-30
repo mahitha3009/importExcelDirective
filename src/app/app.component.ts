@@ -12,12 +12,16 @@ import {Subject} from 'rxjs';
 export class AppComponent {
  
   constructor(public dialog :MatDialog, private _headersService: HeadersService) {
+   //this.headArr = [];
    // this._headersService.myMethod(this.headArr);
   }
   title = 'importexcel';
   public preview = false ;
   public display = false;
-  public headArr=[];
+  public headArr = [];
+  
+ //public headerArray= getheaders();
+
   DataFromEventEmitter(data) {
     this.display= true;
     this.openDialog(data);
@@ -43,6 +47,7 @@ export class AppComponent {
   {
     console.log(headerinput);
     this.headArr=headerinput.split(',');
+    
     console.log(this.headArr);
     var columns=[];
     for(let i=1;i<=this.headArr.length;i++)
@@ -50,7 +55,8 @@ export class AppComponent {
      columns.push(`col${i}`);
     }
     console.log(columns);
-    this._headersService.getheaders(this.headArr);
+    return this.headArr;
+    //this._headersService.getheaders(this.headArr);
   }
  
 
