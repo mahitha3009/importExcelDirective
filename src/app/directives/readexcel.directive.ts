@@ -11,18 +11,43 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angula
 export class ReadexcelDirective {
   excelObservable: Observable<any>;
   @Output() eventEmitter = new EventEmitter();
- @Input() name : string;
+  @Output() headerEvent  = new EventEmitter();
+  
+ @Input('appReadexcel') name : string;
+ @Input() textInput : string;
+ 
  public keys;
+ public headerArray;
+ public headerarrayobject = {};
  constructor(private elementRef: ElementRef) {}
- @Input() headerArray = [];
  ngOnInit() {
-  console.log(this.headerArray);
+  console.log(this.textInput);
 }
 
   @HostListener('change', ['$event.target'])
   onChange(target: HTMLInputElement) {
+    console.log(this.textInput);
+
+    if(this.textInput)
+    {
+      const headerObject= target.value;
+      console.log(target.value)
+      var headerinput=target.value
+      this.headerArray=headerinput.split(',');
+    
+      console.log(this.headerArray);
+      var columns=[];
+      for(let i=1;i<=this.headerArray.length;i++)
+      {
+       columns.push(`col${i}`);
+      }
+      console.log(columns);
+      this.headerEvent.emit(this.headerArray);
+    }
+
+    else
+    {
     const file = target.files[0];
- 
     this.excelObservable = new Observable((subscriber: Subscriber<any>) => {
       this.readFile(file, subscriber);
     });
@@ -30,6 +55,7 @@ export class ReadexcelDirective {
     this.excelObservable.subscribe((d) => {
       this.eventEmitter.emit(d);
     });
+  }
   }
 
   readFile(file: File, subscriber: Subscriber<any>) {

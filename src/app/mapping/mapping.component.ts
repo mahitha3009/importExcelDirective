@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, Input} from '@angular/core';
 import { HeadersService } from '../headers.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CdkDragDrop} from '@angular/cdk/drag-drop';
+import {ReadexcelDirective} from '../directives/readexcel.directive';
 
 
 @Component({
@@ -32,6 +33,16 @@ export class MappingComponent implements OnInit {
 
   DataFromEventEmitter(data) {
     console.log(data);
+  }
+  readHeaders(event)
+  {
+    console.log(event);
+    var columns=[];
+    for(let i=1;i<=event.length;i++)
+    {
+     columns.push(`col${i}`);
+    }
+    console.log(columns);
   }
   loadpreview() {
     this.preview = true;

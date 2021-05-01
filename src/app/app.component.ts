@@ -10,7 +10,7 @@ import {Subject} from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
- 
+  
   constructor(public dialog :MatDialog, private _headersService: HeadersService) {
    //this.headArr = [];
    // this._headersService.myMethod(this.headArr);
@@ -37,27 +37,23 @@ export class AppComponent {
       height:'600px',
      panelClass: 'custom-dialog-container',
       data: data
+
     });
     dialogRef.afterClosed().subscribe(result =>
       {
         // console.log(`Dialog result: ${result}`);
       });
   }
-  keyup(headerinput : string )
+  readHeaders(event)
   {
-    console.log(headerinput);
-    this.headArr=headerinput.split(',');
-    
-    console.log(this.headArr);
+    console.log(event);
     var columns=[];
-    for(let i=1;i<=this.headArr.length;i++)
+    for(let i=1;i<=event.length;i++)
     {
      columns.push(`col${i}`);
     }
     console.log(columns);
-    return this.headArr;
-    //this._headersService.getheaders(this.headArr);
   }
- 
+
 
 }
