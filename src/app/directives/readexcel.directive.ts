@@ -84,7 +84,7 @@ export class ReadexcelDirective {
  
     this.keys = Object.keys(data[0]);
     output.unshift(this.keys);
-
+    
     console.log("headers",this.keys);
     
 console.log("data",output);

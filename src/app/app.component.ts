@@ -11,20 +11,30 @@ import {Subject} from 'rxjs';
 })
 export class AppComponent {
   
-  constructor(public dialog :MatDialog, private _headersService: HeadersService) {
-   //this.headArr = [];
-   // this._headersService.myMethod(this.headArr);
-  }
+  constructor(public dialog :MatDialog) {}
   title = 'importexcel';
   public preview = false ;
   public display = false;
   public headArr = [];
+  public columns =[];
   
- //public headerArray= getheaders();
 
   DataFromEventEmitter(data) {
-    this.display= true;
-    this.openDialog(data);
+   // this.display= true;
+   var filecolumns=data[0].length;
+   console.log(filecolumns);
+   if(this.headArr.length==filecolumns)
+   {
+     this.display=true;
+     console.log('true');
+   }
+   else{
+     this.display=false;
+     console.log('false');
+   }
+    this.openDialog( { tableData: data, headers :this.headArr, columns : this.columns , display: this.display} );
+    
+    
   }
   loadpreview()
   {
@@ -32,28 +42,33 @@ export class AppComponent {
   }
  openDialog(data) 
   {
+    if(this.display)
+    {
     let dialogRef = this.dialog.open( MappingComponent,{
       width: '1000px',
       height:'600px',
      panelClass: 'custom-dialog-container',
       data: data
-
+      
     });
     dialogRef.afterClosed().subscribe(result =>
       {
         // console.log(`Dialog result: ${result}`);
       });
+    }
+    else{
+      console.log('error msg'); 
+    alert('The number of fields in the file are not equal to the given number of headers')   }
   }
   readHeaders(event)
   {
     console.log(event);
-    var columns=[];
+this.headArr=event;
     for(let i=1;i<=event.length;i++)
     {
-     columns.push(`col${i}`);
+     this.columns.push(`col${i}`);
     }
-    console.log(columns);
+    console.log(this.columns);
   }
-
 
 }

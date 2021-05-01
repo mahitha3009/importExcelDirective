@@ -4,7 +4,7 @@
     Drag and drop the column values to the respective header values and preview the result in the table
    </div>
   <div class="whole">
-  <div class="mappingdiv">
+  <div class="mappingdiv" appReadexcel (headerEvent)="readHeaders($event)">
     <table class="table">
         <tr>
           <th scope="col">Headers</th>
