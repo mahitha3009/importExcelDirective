@@ -37,7 +37,9 @@ export class MappingComponent implements OnInit {
 
   readHeaders(event)
   {
+
     console.log(event);
+
     this.headerArray=event;
     var columns=[];
     for(let i=1;i<=event.length;i++)

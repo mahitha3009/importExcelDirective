@@ -17,6 +17,7 @@ export class AppComponent {
   public display = false;
   public headArr = [];
   public columns =[];
+  public displayCF=false;
   
 
   DataFromEventEmitter(data) {
@@ -62,6 +63,7 @@ export class AppComponent {
   }
   readHeaders(event)
   {
+    this.displayCF=true;
     console.log(event);
 this.headArr=event;
     for(let i=1;i<=event.length;i++)
