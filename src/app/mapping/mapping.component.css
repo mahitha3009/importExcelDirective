@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
-table td th{
+/* table td th{
     text-align: center;
     padding: 1%;
     font-size: small;
@@ -46,7 +46,7 @@ th {
 /*.whole
 {
   position: relative;
-}*/
+}
 
 .cdk-drop-list-dragging {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
@@ -79,9 +79,73 @@ button{
 .commentdiv
 {
   display: block;
-  font-family: "Times New Roman", Times, serif;
   font-style: italic;
   margin-top: 5px;
   float:left;
   font-size: medium;
+} */
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.commentdiv {
+  flex-basis: 60%;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.cdk-drop-list-dragging {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  padding: 4px;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.throw{
+  font-weight: bold;
+}
+
+.whole {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top:30px;
+}
+
+.mappingdiv {
+  display: flex;
+  flex-basis: 25%;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.col-names .col-ids{
+  flex-basis: 50%;
+}
+
+.previewtable {
+  flex-basis: 65%;
+  overflow-x: scroll;
+}
+
+.mat-typography {
+  max-height: 100%;
 }

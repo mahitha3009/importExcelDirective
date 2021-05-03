@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject, Input} from '@angular/core';
-import { HeadersService } from '../headers.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CdkDragDrop} from '@angular/cdk/drag-drop';
 import {ReadexcelDirective} from '../directives/readexcel.directive';
@@ -12,41 +11,18 @@ import {ReadexcelDirective} from '../directives/readexcel.directive';
 })
 export class MappingComponent implements OnInit {
   public headers = [];
-  public headerArray= [];
   public columns=[];
   public preview = false;
   public newdata;
-  public values;
   displayedColumns: string[] = ["header", "column"];
  
-  constructor(private _headersService: HeadersService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data) {
-  
+  constructor(public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data) {
    }
 
   ngOnInit(): void {
-    this.values = this._headersService.getheaders(this.headerArray);
     this.headers=this.data.headers;
     this.columns=this.data.columns;
     this.newdata=this.data.tableData.slice(0,6);
-  }
-
-
- /* DataFromEventEmitter(data) {
-    console.log(data);
-  }*/
-
-  readHeaders(event)
-  {
-
-    console.log(event);
-
-    this.headerArray=event;
-    var columns=[];
-    for(let i=1;i<=event.length;i++)
-    {
-     columns.push(`col${i}`);
-    }
-    console.log(columns);
   }
 
   loadpreview() {

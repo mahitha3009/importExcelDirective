@@ -12,7 +12,6 @@ import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/
 import { from } from 'rxjs';
 import { MappingComponent } from './mapping/mapping.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
-import {HeadersService} from './headers.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
   import {MatTableModule} from '@angular/material/table';
   import {CdkTableModule} from '@angular/cdk/table';
@@ -43,7 +42,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
   entryComponents: [
    MappingComponent
   ],
-  providers: [HeadersService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

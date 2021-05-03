@@ -1,13 +1,9 @@
 <div class="container">
-<h1> Enter headers </h1>
-<div class="textdiv">
-<input type="text" class="form-control" placeholder="header1,header2.." #headerinput appReadexcel textInput="true" (headerEvent)="readHeaders($event)"/>
-<span class="focus-border"></span>
-</div>
- <div *ngIf="displayCF" class="button-wrapper">
+ <div class="button-wrapper">
   <span class="label"> choose file </span>
-<input type="file" id="upload" name="upload" class="upload-box" appReadexcel  #readexcel="readexcel" (eventEmitter)="DataFromEventEmitter($event)" />
+<input type="file" id="upload" name="upload" class="upload-box" appReadexcel  #readexcel="readexcel"  [headArr]="headArr" (eventEmitter)="DataFromEventEmitter($event)"  />
 </div>
 </div>
+
 
 

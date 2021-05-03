@@ -1,11 +1,16 @@
 <mat-dialog-content class="mat-typography">
   <h1> Mapping </h1>
+  <div class="header">
   <div class="commentdiv">
     Drag and drop the column values to the respective header values and preview the result in the table
    </div>
+   <div class="previewbuttdiv">
+    <button (click)="loadpreview();" mat-raised-button color="primary"> Preview </button>
+  </div>
+</div>
   <div class="whole">
-  <div class="mappingdiv" appReadexcel (headerEvent)="readHeaders($event)">
-    <table class="table">
+  <div class="mappingdiv">
+    <table class="table col-names">
         <tr>
           <th scope="col">Headers</th>
         </tr>
@@ -14,7 +19,7 @@
           <td>{{h}}</td>
         </tr>
     </table>
-    <table class="table" id="col">
+    <table class="table col-ids" id="col">
         <tr>
           <th scope="col">Columns</th>
         </tr>
@@ -24,10 +29,6 @@
         </tr>
         </tbody>
     </table>
-  </div>
-
-  <div class="previewbuttdiv">
-    <button (click)="loadpreview();" mat-raised-button color="primary"> Preview </button>
   </div>
 
 <div class="previewtable" *ngIf="preview">

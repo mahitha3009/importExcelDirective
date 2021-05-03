@@ -1,7 +1,8 @@
 import { Directive, HostListener, Input, Output, EventEmitter, Inject, ElementRef} from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import * as XLSX from 'xlsx';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
+import { MappingComponent } from '../mapping/mapping.component';
 
 @Directive({
   selector: '[appReadexcel]',
@@ -11,42 +12,46 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angula
 export class ReadexcelDirective {
   excelObservable: Observable<any>;
   @Output() eventEmitter = new EventEmitter();
-  @Output() headerEvent  = new EventEmitter();
-  
  @Input('appReadexcel') name : string;
- @Input() textInput : string;
  
+ @Input() headArr : string[];
+ public columns=[];
+  
  public keys;
  public headerArray;
  public headerarrayobject = {};
- constructor(private elementRef: ElementRef) {}
+ constructor(private elementRef: ElementRef, public dialog :MatDialog) {}
+
  ngOnInit() {
-  console.log(this.textInput);
+  console.log("headArr", this.headArr);
 }
+
+openDialog(data) 
+{
+  if(this.headArr.length==data.tableData[0].length)
+  {
+  let dialogRef = this.dialog.open( MappingComponent,{
+    width: '1000px',
+    height:'600px',
+   panelClass: 'custom-dialog-container',
+    data: data
+});
+  dialogRef.afterClosed().subscribe(result =>
+    {
+      // console.log(`Dialog result: ${result}`);
+    });
+  }
+  else
+  {
+  console.log('error msg'); 
+  alert('The number of fields in the file are not equal to the given number of headers');
+  }
+ }
+
 
   @HostListener('change', ['$event.target'])
   onChange(target: HTMLInputElement) {
-    console.log(this.textInput);
-
-    if(this.textInput)
-    {
-      const headerObject= target.value;
-      console.log(target.value)
-      var headerinput=target.value
-      this.headerArray=headerinput.split(',');
-    
-      console.log(this.headerArray);
-      var columns=[];
-      for(let i=1;i<=this.headerArray.length;i++)
-      {
-       columns.push(`col${i}`);
-      }
-      console.log(columns);
-      this.headerEvent.emit(this.headerArray);
-    }
-
-    else
-    {
+   console.log(this.headArr);
     const file = target.files[0];
     this.excelObservable = new Observable((subscriber: Subscriber<any>) => {
       this.readFile(file, subscriber);
@@ -55,7 +60,6 @@ export class ReadexcelDirective {
     this.excelObservable.subscribe((d) => {
       this.eventEmitter.emit(d);
     });
-  }
   }
 
   readFile(file: File, subscriber: Subscriber<any>) {
@@ -89,7 +93,15 @@ export class ReadexcelDirective {
     
 console.log("data",output);
     subscriber.next(output);
+    for(let i=1;i<=this.headArr.length;i++)
+    {
+     this.columns.push(`col${i}`);
+    }
+    console.log(this.columns);
     subscriber.complete();
+    console.log(this.headArr);
+    this.openDialog({tableData: output, headers : this.headArr, columns : this.columns});
+    
   };
 }
     else 
