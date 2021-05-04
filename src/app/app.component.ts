@@ -11,17 +11,15 @@ export class AppComponent {
   
   constructor(public dialog :MatDialog) {}
   title = 'importexcel';
-  public preview = false ;
-  public headArr = ["id","name","loc"];
+  public headArr = [{hname : "id", datatype: "number", validation: "required"},
+                      {hname : "name", datatype: "string", validation : "not null"},
+                      {hname : "location", datatype : "string", validation:"required"}
+];
  
-
   DataFromEventEmitter(data) {
    console.log(data);
   }
 
-  loadpreview()
-  {
-    this.preview= true;
-  }
+  
  
 }
