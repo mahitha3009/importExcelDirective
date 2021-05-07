@@ -14,10 +14,8 @@ export class ReadexcelDirective {
   excelObservable: Observable<any>;
   @Output() eventEmitter = new EventEmitter();
  @Input('appReadexcel') name : string;
- 
  @Input() headArr : {};
  public columns=[];
-  
  public keys;
  public headerArray = [];
  public headerarrayobject = {};
@@ -96,58 +94,20 @@ openDialog(data)
 console.log("data",output);
     subscriber.next(output);
     subscriber.complete();
- //   console.log(Object.keys(this.headArr).length);
+
     //columns array 
     for(let i=1;i<=Object.keys(this.headArr).length;i++)
     {
      this.columns.push(`col${i}`);
     }
     console.log(this.columns);
+
     //header arraay
     for(let i=0; i<Object.keys(this.headArr).length;i++ )
     {
       this.headerArray.push(this.headArr[i].hname);
     }
-    console.log(output.length);
-    let tcount=0;
-    for(let i=0; i<Object.keys(this.headArr).length;i++)
-    {
-      var d=(this.headArr[i].datatype);
-      console.log(d);
-      var count=0;
-     for(let j=1;j<output.length;j++)
-      {
-        console.log( typeof output[j][i]);
-        if(d!=typeof output[j][i])
-        {
-          alert("the file columns are not of the required data type")
-        }
-      }
-      var v= this.headArr[i].validation;
-      if(v== 'required')
-      {
-      for(let j=1;j<output.length;j++)
-      {
-      if(output[j][i]== '')
-      {
-        alert("the fields in the file do not satisfy the validation condition");
-      }
-      }
-    }
-    if(v=='not null')
-    {
-      for(let j=1;j<output.length;j++)
-      {
-      if(output[j][i]==null)
-      {
-        alert("the fields in the file do not satisfy the validation condition");
-      }
-    }
-
-    }
-  }
-
-    this.openDialog({tableData: output, headers : this.headerArray , columns : this.columns});
+    this.openDialog({tableData: output, headers : this.headerArray , columns : this.columns, headArr: this.headArr});
     
   };
 }
@@ -176,6 +136,22 @@ console.log("data",output);
 console.log("data",output);
       subscriber.next(output);
       subscriber.complete();
+
+      //columns array
+      for(let i=1;i<=Object.keys(this.headArr).length;i++)
+      {
+       this.columns.push(`col${i}`);
+      }
+      console.log(this.columns);
+
+      //header array
+      for(let i=0; i<Object.keys(this.headArr).length;i++ )
+      {
+        this.headerArray.push(this.headArr[i].hname);
+      }
+     
+          this.openDialog({tableData: output, headers : this.headerArray , columns : this.columns, headArr: this.headArr});
+      
     };
   }
 }
