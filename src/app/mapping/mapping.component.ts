@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, Input, Output} from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CdkDragDrop} from '@angular/cdk/drag-drop';
 import {ReadexcelDirective} from '../directives/readexcel.directive';
+import {ErrormessageComponent} from '../errormessage/errormessage.component';
 
 
 @Component({
@@ -47,6 +48,12 @@ export class MappingComponent implements OnInit {
       this.newdata[i][currCol] = temp;
     }
   }
+  openDialog(data)
+  {
+    let dialogRef= this.dialog.open(ErrormessageComponent,{
+      data: data
+    });
+  }
 
 onsubmit()
 {
@@ -54,32 +61,44 @@ onsubmit()
   {
     var d=(this.headerarrayobject[i].datatype);
     var v= this.headerarrayobject[i].validation;
-    console.log(d);
-   for(let j=1;j<this.newdata.length;j++)
+
+  for(let j=1;j<this.newdata.length;j++)
     {
-      console.log( typeof this.newdata[j][i]);
-      if(d!=typeof this.newdata[j][i])
+     // console.log( typeof this.newdata[j][i]);
+     if(this.newdata[j][i]!= null)
+     {
+      if(d!=typeof this.newdata[j][i] && d==='string')
       {
-        alert("the file columns are not of the required data type")
+         var emsg = "The column " + (i+1)+ " mapped to " + this.headerarrayobject[i].hname + " is not a text "
+          this.openDialog({error: emsg , tabledata: this.data.tableData, headerarrayobject : this.headerarrayobject});
         break;
       }
-      if(v== 'required')
+      if(d!=typeof this.newdata[j][i] && d==='number')
+      {
+  
+          
+          var emsg = "The column " + (i+1)+ " mapped to " + this.headerarrayobject[i].hname + " is not a number " 
+          this.openDialog({error: emsg , tabledata: this.data.tableData, headerarrobj : this.headerarrayobject});
+      
+        break;
+      }
+    }
+
+     for(let k=0;k<v.length;k++)
+     {
+      if( v[k] == 'required')
       {
         if(this.newdata[j][i]== '')
         {
-          alert("the fields in the file do not satisfy the validation condition");
+
+          var  emsg ="The values in column " + (i+1) + " mapped to " + this.headerarrayobject[i].hname + "  do not satisfy the '" +v[k]+ "' validation condition"
+          this.openDialog({error: emsg , tabledata: this.data.tableData, headerarrobj : this.headerarrayobject});
           break;
         }
       }
-      if(v=='not null')
-      {
-        if(this.newdata[j][i]==null)
-        {
-          alert("the fields in the file do not satisfy the validation condition");
-          break;
-        }
-      }
+    }
   }
+  
 }
 }
 

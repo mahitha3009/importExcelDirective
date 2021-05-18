@@ -3,6 +3,7 @@ import { Observable, Subscriber } from 'rxjs';
 import * as XLSX from 'xlsx';
 import {MatDialog} from '@angular/material/dialog';
 import { MappingComponent } from '../mapping/mapping.component';
+import {ErrormessageComponent} from '../errormessage/errormessage.component';
 
 
 @Directive({
@@ -19,7 +20,8 @@ export class ReadexcelDirective {
  public keys;
  public headerArray = [];
  public headerarrayobject = {};
- constructor(private elementRef: ElementRef, public dialog :MatDialog) {}
+ constructor(private elementRef: ElementRef, public dialog :MatDialog) {
+ }
 
  ngOnInit() {
   console.log("headArr", this.headArr);
@@ -44,7 +46,12 @@ openDialog(data)
   else
   {
   console.log('error msg'); 
-  alert('The number of fields in the file are not equal to the given number of headers');
+  var emsg="The number of fields in the file are not equal to the number of given headers";
+  let dialogRef= this.dialog.open(ErrormessageComponent,{
+    data:{
+    emsg : "The number of fields in the file are not equal to the number of given headers"
+    } 
+  });
   }
  }
 
@@ -78,18 +85,37 @@ openDialog(data)
     const ws: XLSX.WorkSheet = wb.Sheets[wsname];
 
     const data = XLSX.utils.sheet_to_json(ws);
-    
+    console.log(data);
+    let arr= new Set()
+    data.map(d=>{
+      Object.keys(d).map(key =>{
+        arr.add(key)
+      })
+    })
+    let Arr= [...arr]
+
+    data.map(d=>{
+      Arr.map(key=>{
+        if(!d.hasOwnProperty(`${key}`)){
+          d[`${key}`]=""
+        }
+      })
+    })
+    console.log(data);
+
     var output = data.map(function(obj) {
-      return Object.keys(obj).map(function(key) { 
-        return obj[key];
-      });
+      let arr=[]
+      Arr.map(key=>{
+        arr.push(obj[`${key}`])
+      })
+      return arr
     });
     
  
     this.keys = Object.keys(data[0]);
     output.unshift(this.keys);
     
-    console.log("headers",this.keys);
+    console.log("headers",this.keys); 
     
 console.log("data",output);
     subscriber.next(output);
@@ -124,12 +150,32 @@ console.log("data",output);
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
 
       const data = XLSX.utils.sheet_to_json(ws);
-
+      console.log(data);
+      let arr= new Set()
+      data.map(d=>{
+        Object.keys(d).map(key =>{
+          arr.add(key)
+        })
+      })
+      let Arr= [...arr]
+  
+      data.map(d=>{
+        Arr.map(key=>{
+          if(!d.hasOwnProperty(`${key}`)){
+            d[`${key}`]=""
+          }
+        })
+      })
+      console.log(data);
+  
       var output = data.map(function(obj) {
-        return Object.keys(obj).map(function(key) { 
-          return obj[key];
-        });
+        let arr=[]
+        Arr.map(key=>{
+          arr.push(obj[`${key}`])
+        })
+        return arr
       });
+      
      var keys = Object.keys(data[0]);
       output.unshift(keys);
 
