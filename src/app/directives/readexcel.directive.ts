@@ -16,9 +16,7 @@ export class ReadexcelDirective {
   @Output() eventEmitter = new EventEmitter();
  @Input('appReadexcel') name : string;
  @Input() headArr : {};
- public columns=[];
  public keys;
- public headerArray = [];
  public headerarrayobject = {};
  constructor(private elementRef: ElementRef, public dialog :MatDialog) {
  }
@@ -29,7 +27,7 @@ export class ReadexcelDirective {
 
 openDialog(data) 
 {
-
+  console.log(Object.keys(this.headArr).length);
   if(Object.keys(this.headArr).length==data.tableData[0].length)
   {
   let dialogRef = this.dialog.open( MappingComponent,{
@@ -45,12 +43,9 @@ openDialog(data)
   }
   else
   {
-  console.log('error msg'); 
   var emsg="The number of fields in the file are not equal to the number of given headers";
   let dialogRef= this.dialog.open(ErrormessageComponent,{
-    data:{
-    emsg : "The number of fields in the file are not equal to the number of given headers"
-    } 
+    data: {error: emsg} 
   });
   }
  }
@@ -121,19 +116,21 @@ console.log("data",output);
     subscriber.next(output);
     subscriber.complete();
 
-    //columns array 
+    //columns array
+    let columns =[]; 
     for(let i=1;i<=Object.keys(this.headArr).length;i++)
     {
-     this.columns.push(`col${i}`);
+     columns.push(`col${i}`);
     }
-    console.log(this.columns);
+    console.log(columns);
 
     //header arraay
+    let headerArray=[];
     for(let i=0; i<Object.keys(this.headArr).length;i++ )
     {
-      this.headerArray.push(this.headArr[i].hname);
+      headerArray.push(this.headArr[i].hname);
     }
-    this.openDialog({tableData: output, headers : this.headerArray , columns : this.columns, headArr: this.headArr});
+    this.openDialog({tableData: output, headers : headerArray , columns : columns, headArr: this.headArr});
     
   };
 }
@@ -184,19 +181,21 @@ console.log("data",output);
       subscriber.complete();
 
       //columns array
+      let columns=[];
       for(let i=1;i<=Object.keys(this.headArr).length;i++)
       {
-       this.columns.push(`col${i}`);
+       columns.push(`col${i}`);
       }
-      console.log(this.columns);
+      console.log(columns);
 
       //header array
+      let headerArray=[];
       for(let i=0; i<Object.keys(this.headArr).length;i++ )
       {
-        this.headerArray.push(this.headArr[i].hname);
+        headerArray.push(this.headArr[i].hname);
       }
      
-          this.openDialog({tableData: output, headers : this.headerArray , columns : this.columns, headArr: this.headArr});
+          this.openDialog({tableData: output, headers : headerArray , columns : columns, headArr: this.headArr});
       
     };
   }

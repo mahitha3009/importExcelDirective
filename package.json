@@ -25,6 +25,7 @@
     "bootstrap": "^4.6.0",
     "exceljs": "^4.2.1",
     "file-saver": "^2.0.5",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
     "ng-uikit-pro-standard": "^1.0.0",

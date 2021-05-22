@@ -1,6 +1,17 @@
 <div class="container">
+  <table cellspacing="0px">
+    <tr>
+      <td style="padding-right: 0px;">
  <div class="button-wrapper">
   <span class="label"> choose file </span>
 <input type="file" id="upload" name="upload" class="upload-box" appReadexcel  #readexcel="readexcel"  [headArr]="headArr"  (eventEmitter)="DataFromEventEmitter($event)"  />
+
 </div>
+</td>
+<td style="padding-left: 0px; margin-left: 50px;">
+<i class="fa fa-info-circle" (click)="opendetails()"> </i>
+</td>
+
+</tr>
+</table>
 </div>

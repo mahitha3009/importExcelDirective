@@ -18,6 +18,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
   import {CdkTreeModule} from '@angular/cdk/tree';
   import {DragDropModule} from '@angular/cdk/drag-drop';
 import { ErrormessageComponent } from './errormessage/errormessage.component';
+import { DetailsComponent } from './details/details.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ErrormessageComponent } from './errormessage/errormessage.component';
     ReadexcelDirective,
     MappingComponent,
     ErrormessageComponent,
+    DetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +41,7 @@ import { ErrormessageComponent } from './errormessage/errormessage.component';
     MatTableModule,
     CdkTableModule,
     CdkTreeModule,
-    DragDropModule
+    DragDropModule,
   ],
   entryComponents: [
    MappingComponent,

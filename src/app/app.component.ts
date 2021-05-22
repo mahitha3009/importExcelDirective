@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { MappingComponent } from './mapping/mapping.component';
+import {DetailsComponent} from './details/details.component';
 
 @Component({
   selector: 'app-root',
@@ -19,5 +20,11 @@ export class AppComponent {
 
   DataFromEventEmitter(data) {
    console.log(data);
+  }
+  opendetails()
+  {
+    let dialogRef= this.dialog.open(DetailsComponent,{
+      data: this.headArr
+    });
   }
 }
