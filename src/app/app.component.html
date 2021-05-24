@@ -4,7 +4,7 @@
       <td style="padding-right: 0px;">
  <div class="button-wrapper">
   <span class="label"> choose file </span>
-<input type="file" id="upload" name="upload" class="upload-box" appReadexcel  #readexcel="readexcel"  [headArr]="headArr"  (eventEmitter)="DataFromEventEmitter($event)"  />
+<input type="file" id="upload" name="upload" class="upload-box" appReadexcel  #readexcel="readexcel"  [headArr]="headArr" onclick="value = null" (eventEmitter)="DataFromEventEmitter($event)"  />
 
 </div>
 </td>
