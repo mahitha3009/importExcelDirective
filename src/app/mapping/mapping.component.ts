@@ -17,6 +17,7 @@ export class MappingComponent implements OnInit {
   public submit=true;
   public newdata;
   public headerarrayobject = {};
+  public t;
   displayedColumns: string[] = ["header", "column"];
  
   constructor(public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data) {
@@ -61,23 +62,31 @@ onsubmit()
   {
     var d=(this.headerarrayobject[i].datatype);
     var v= this.headerarrayobject[i].validation;
-
+   for(let j=0;j<this.newdata[0].length;j++)
+   {
+     if(this.headerarrayobject[i].hname === this.newdata[0][j])
+     {
+        this.t=j;
+       console.log(this.t);
+       console.log(this.headerarrayobject[i].hname);
+     }
+   }
   for(let j=1;j<this.newdata.length;j++)
     {
      // console.log( typeof this.newdata[j][i]);
-     if(this.newdata[j][i]!= null)
+     if(this.newdata[j][this.t]!= null)
      {
-      if(d!=typeof this.newdata[j][i] && d==='string')
+      if(d!=typeof this.newdata[j][this.t] && d==='string')
       {
-         var emsg = "The column " + (i+1)+ " mapped to " + this.headerarrayobject[i].hname + " is not a text "
+         var emsg = "The column  mapped to " + this.headerarrayobject[i].hname + " is not a text "
           this.openDialog({error: emsg , tabledata: this.data.tableData, headerarrayobject : this.headerarrayobject});
         break;
       }
-      if(d!=typeof this.newdata[j][i] && d==='number')
+      if(d!=typeof this.newdata[j][this.t] && d==='number')
       {
   
           
-          var emsg = "The column " + (i+1)+ " mapped to " + this.headerarrayobject[i].hname + " is not a number " 
+          var emsg = "The column mapped to " + this.headerarrayobject[i].hname + " is not a number " 
           this.openDialog({error: emsg , tabledata: this.data.tableData, headerarrobj : this.headerarrayobject});
       
         break;
@@ -88,10 +97,10 @@ onsubmit()
      {
       if( v[k] == 'required')
       {
-        if(this.newdata[j][i]== '')
+        if(this.newdata[j][this.t] == '')
         {
 
-          var  emsg ="The values in column " + (i+1) + " mapped to " + this.headerarrayobject[i].hname + "  do not satisfy the '" +v[k]+ "' validation condition"
+          var  emsg ="The values in column  mapped to " + this.headerarrayobject[i].hname + "  do not satisfy the '" +v[k]+ "' validation condition"
           this.openDialog({error: emsg , tabledata: this.data.tableData, headerarrobj : this.headerarrayobject});
           break;
         }

@@ -21,7 +21,6 @@ export class ErrormessageComponent implements OnInit {
     this.headerarrobject = this.data.headerarrayobject;
     this.tabdata = this.data.tabledata;
  
-    console.log(this.headerarrobject);
   }
   fileName: string = 'Faultyreport.xlsx';
 
