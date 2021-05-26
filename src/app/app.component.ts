@@ -13,9 +13,10 @@ export class AppComponent {
   constructor(public dialog :MatDialog) {}
   title = 'importexcel';
   public display;
-  public headArr = [{hname : "id", datatype: "number", validation: ["required"]},
-                      {hname : "name", datatype: "string", validation : ["required"]},
-                      {hname : "location", datatype : "string", validation:["required"]}
+  public headArr = [{hname : "item Name", datatype: "string", validation: ["required"]},
+                      {hname : "Lifespan", datatype: "string", validation : ["required"]},
+                      {hname : "Reason to discontinue", datatype : "string", validation:["required"]},
+                      {hname : "Breakdowns", datatype : "string", validation:["required"]}
 ];
 
   DataFromEventEmitter(data) {

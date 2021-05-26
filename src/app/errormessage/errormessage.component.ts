@@ -18,9 +18,10 @@ export class ErrormessageComponent implements OnInit {
 
   ngOnInit(): void {
     this.dialogRef.updatePosition({ top: `20px` });
-    this.headerarrobject = this.data.headerarrayobject;
+    this.headerarrobject = this.data.headerarrobj;
     this.tabdata = this.data.tabledata;
- 
+   console.log(this.data);
+   console.log(this.data.headerarrobj);
   }
   fileName: string = 'Faultyreport.xlsx';
 
@@ -32,9 +33,10 @@ export class ErrormessageComponent implements OnInit {
     for (let j = 0; j <= this.tabdata.length; j++) {
       const row = worksheet.addRow(this.tabdata[j]);
     }
+    console.log(this.headerarrobject);
     for (let i = 0; i < Object.keys(this.headerarrobject).length; i++) {
       var d = (this.headerarrobject[i].datatype);
-      var v = this.headerarrobject[i].validation;
+     
 
       for (let j = 1; j < this.tabdata.length; j++) {
         var row = worksheet.getRow(j+1);
@@ -47,7 +49,9 @@ export class ErrormessageComponent implements OnInit {
             isfaulty = true;
           }
         }
-
+        if(this.headerarrobject[i].validation.length)
+        {
+          var v = this.headerarrobject[i].validation;
         for (let k = 0; k < v.length; k++) {
           if (v[k] == 'required') {
             if (this.tabdata[j][i] == '') {
@@ -56,6 +60,7 @@ export class ErrormessageComponent implements OnInit {
             }
           }
         }
+      }
         if (isfaulty) {
           const qty = row.getCell(i+1);
           let color = 'FFCC0000';

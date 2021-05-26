@@ -43,9 +43,11 @@ openDialog(data)
   }
   else
   {
-  var emsg="The number of fields in the file are not equal to the number of given headers";
+    var etitle="Header mismatch!";
+  var emsg="The number of fields in the file are not equal to the number of given headers. Click on the informative icon to know the instructions on uploading a file.";
   let dialogRef= this.dialog.open(ErrormessageComponent,{
-    data: {error: emsg} 
+    data: {error: emsg,
+    etitle: etitle} 
   });
   }
  }
