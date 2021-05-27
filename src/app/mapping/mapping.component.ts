@@ -18,6 +18,7 @@ export class MappingComponent implements OnInit {
   public newdata;
   public headerarrayobject = {};
   public t;
+  public tabdata;
   public eflag=false;
   displayedColumns: string[] = ["header", "column"];
  
@@ -27,6 +28,7 @@ export class MappingComponent implements OnInit {
   ngOnInit(): void {
     this.headers=this.data.headers;
     this.columns=this.data.columns;
+    this.tabdata=this.data.tableData;
     this.newdata=this.data.tableData.slice(0,6);
     this.headerarrayobject= this.data.headArr;
   }
@@ -59,24 +61,26 @@ export class MappingComponent implements OnInit {
 
 onsubmit()
 {
-  
+  this.eflag=false;
   for(let i=0; i<Object.keys(this.headerarrayobject).length;i++)
   {
     var d=(this.headerarrayobject[i].datatype);
-  
-   
    for(let j=0;j<this.newdata[0].length;j++)
    {
-     if(this.headerarrayobject[i].hname === this.newdata[0][j])
+     if(this.headerarrayobject[i].hname.toUpperCase() === this.newdata[0][j].toUpperCase())
      {
         this.t=j;
      }
    }
-  for(let j=1;j<this.newdata.length;j++)
+   if(this.eflag)
+   {
+     break;
+   }
+  for(let j=1;j<this.tabdata.length;j++)
     {
-    if(this.newdata[j][this.t]!= "")
+    if(this.tabdata[j][this.t]!= "")
      {
-      if(d!=typeof this.newdata[j][this.t] && d==='string')
+      if(d!=typeof this.tabdata[j][this.t] && d==='string')
       {
         this.eflag=true;
          var emsg = "The column mapped to " + this.headerarrayobject[i].hname + " is not a text ";
@@ -84,40 +88,45 @@ onsubmit()
           this.openDialog({error: emsg ,etitle:etitle, tabledata: this.data.tableData, headerarrayobject : this.headerarrayobject});
         break;
       }
-      if(d!=typeof this.newdata[j][this.t] && d==='number')
+    
+      if(d!=typeof this.tabdata[j][this.t] && d==='number')
       {
        this.eflag=true;
           var emsg = "The column mapped to " + this.headerarrayobject[i].hname + " is not a number "; 
           var etitle= "Datatype mismatch!"
-          this.openDialog({error: emsg ,etitle:etitle, tabledata: this.data.tableData, headerarrobj : this.headerarrayobject});
+          this.openDialog({error: emsg ,etitle:etitle, tabledata: this.data.tableData, headerarrayobject : this.headerarrayobject});
         break;
       }
    }
-   if(this.headerarrayobject[i].validation.length)
+   if(this.eflag)
+   {
+     break;
+   }
+
+   if(this.headerarrayobject[i].validation)
    {
     var v= this.headerarrayobject[i].validation;
    for(let k=0;k<v.length;k++)
      {
       if( v[k] === 'required')
       {
-        if(this.newdata[j][this.t] === "")
+        if(this.tabdata[j][this.t] === "")
         {
           this.eflag=true;
           var etitle="validation rule mismatch";
           var  emsg ="The values in column  mapped to " + this.headerarrayobject[i].hname + "  do not satisfy the '" +v[k]+ "' validation condition";
-          this.openDialog({error: emsg ,etitle: etitle, tabledata: this.data.tableData, headerarrobj : this.headerarrayobject});
+          this.openDialog({error: emsg ,etitle: etitle, tabledata: this.data.tableData, headerarrayobject : this.headerarrayobject});
           break;
         }
       }
+
     }
    
   }
+  
  
   }
-  if(this.eflag)
-  {
-    break;
-  }
+
 }
 }
 
