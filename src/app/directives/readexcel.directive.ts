@@ -135,7 +135,7 @@ console.log("data",output);
     
   };
 }
-    else 
+    else if(Ext=="xlsx")
     {
       fileReader.readAsArrayBuffer(file);
       fileReader.onload = (e) => {
@@ -200,6 +200,16 @@ console.log("data",output);
       
     };
   }
+  else
+  {
+    var etitle="File-type mismatch";
+      var emsg="The uploaded file is not in the csv or excel format";
+      let dialogRef= this.dialog.open(ErrormessageComponent,{
+        data: {error: emsg,
+        etitle: etitle} 
+  });
+}
+
 }
 }
 

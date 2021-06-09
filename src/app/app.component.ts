@@ -16,7 +16,7 @@ export class AppComponent {
   public headArr = [{hname : "item Name", datatype: "string" },
                       {hname : "Lifespan", datatype: "string", validation : ["required"]},
                       {hname : "Reason to discontinue", datatype : "string", validation:["required"]},
-                      {hname : "Breakdowns", datatype : "string", validation:["required"]}
+                      {hname : "Breakdowns", datatype : "string", validation:["required"]},
 ];
 
   DataFromEventEmitter(data) {

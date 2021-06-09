@@ -16,7 +16,10 @@
           <th scope="col">Headers</th>
         </tr>
         <tr *ngFor="let h of headers">
-          <td>{{h}}</td>
+          <td>
+            <div style="height: 30px;">
+            {{h}}
+          </div></td>
         </tr>
     </table>
     <table class="table col-ids" id="col">
@@ -25,7 +28,8 @@
         </tr>
       <tbody cdkDropList (cdkDropListDropped)="drop($event)">
         <tr *ngFor="let c of columns">
-          <td cdkDrag cdkDragLockAxis="y">{{ c }}</td>
+          <td cdkDrag cdkDragLockAxis="y" style="padding-left: 5px;">
+            <div style="height: 30px;">{{ c }} </div></td>
         </tr>
         </tbody>
     </table>
@@ -45,6 +49,7 @@
 </div>
 <div mat-dialog-actions class="submit" align="end">
   <button class="submitbutt" (click)="onsubmit();" mat-raised-button color="primary" appReadexcel >Submit</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]> Close </button>
   </div>
 </div>
 

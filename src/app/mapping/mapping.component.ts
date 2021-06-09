@@ -46,10 +46,10 @@ export class MappingComponent implements OnInit {
     let currCol = event.currentIndex;
 
 
-    for(let i=0; i<this.newdata.length; i++){
-      let temp = this.newdata[i][prevCol];
-      this.newdata[i][prevCol] = this.newdata[i][currCol];
-      this.newdata[i][currCol] = temp;
+    for(let i=0; i<this.tabdata.length; i++){
+      let temp = this.tabdata[i][prevCol];
+      this.tabdata[i][prevCol] = this.tabdata[i][currCol];
+      this.tabdata[i][currCol] = temp;
     }
   }
   openDialog(data)
