@@ -28,7 +28,7 @@ export class ReadexcelDirective {
 openDialog(data) 
 {
   console.log(Object.keys(this.headArr).length);
-  if(Object.keys(this.headArr).length==data.tableData[0].length)
+  if(Object.keys(this.headArr).length==data.tableData[0].length && data.tableData.length<100)
   {
   let dialogRef = this.dialog.open( MappingComponent,{
     width: '1000px',
@@ -41,7 +41,7 @@ openDialog(data)
       // console.log(`Dialog result: ${result}`);
     });
   }
-  else
+  else if(Object.keys(this.headArr).length!=data.tableData[0].length)
   {
     var etitle="Header mismatch!";
   var emsg="The number of fields in the file are not equal to the number of given headers. Click on the informative icon to know the instructions on uploading a file.";
@@ -49,6 +49,15 @@ openDialog(data)
     data: {error: emsg,
     etitle: etitle} 
   });
+  }
+  else
+  {
+    var etitle = "Rows Exceeding limit";
+    var emsg = "The file contains more than 100 rows";
+    let dialogRef= this.dialog.open(ErrormessageComponent,{
+      data: {error: emsg,
+      etitle: etitle} 
+    });
   }
  }
 
@@ -76,12 +85,13 @@ openDialog(data)
     fileReader.onload = (e) => {
     const bufferArray = e.target.result;
      
-    const wb: XLSX.WorkBook = XLSX.read(bufferArray, { type: 'string' });
+    const wb: XLSX.WorkBook = XLSX.read(bufferArray, { type: 'binary',cellDates:true, dateNF:'DD-MM-YYYY'});
     const wsname: string = wb.SheetNames[0];
 
     const ws: XLSX.WorkSheet = wb.Sheets[wsname];
 
-    const data = XLSX.utils.sheet_to_json(ws);
+    const data = XLSX.utils.sheet_to_json(ws, {raw:false});
+    
     console.log(data);
     let arr= new Set()
     data.map(d=>{
@@ -103,6 +113,11 @@ openDialog(data)
     var output = data.map(function(obj) {
       let arr=[]
       Arr.map(key=>{
+        let isnum = /^\d+$/.test(obj[`${key}`]);
+        if(isnum)
+        {
+          obj[`${key}`]=parseInt(obj[`${key}`])
+        }
         arr.push(obj[`${key}`])
       })
       return arr
@@ -141,13 +156,13 @@ console.log("data",output);
       fileReader.onload = (e) => {
         const bufferArray = e.target.result;
     
-       const wb: XLSX.WorkBook = XLSX.read(bufferArray, { type: 'buffer' });
+       const wb: XLSX.WorkBook = XLSX.read(bufferArray, { type: 'buffer', cellDates:true, dateNF:'dd/mm/yyyy'});
 
       const wsname: string = wb.SheetNames[0];
 
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
 
-      const data = XLSX.utils.sheet_to_json(ws);
+      const data = XLSX.utils.sheet_to_json(ws, {raw:false});
       console.log(data);
       let arr= new Set()
       data.map(d=>{
@@ -169,6 +184,11 @@ console.log("data",output);
       var output = data.map(function(obj) {
         let arr=[]
         Arr.map(key=>{
+          let isnum = /^\d+$/.test(obj[`${key}`]);
+        if(isnum)
+        {
+          obj[`${key}`]=parseInt(obj[`${key}`])
+        }
           arr.push(obj[`${key}`])
         })
         return arr
