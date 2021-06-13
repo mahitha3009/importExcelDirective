@@ -32,14 +32,15 @@ export class ErrormessageComponent implements OnInit {
       const row = worksheet.addRow(this.tabdata[j]);
     }
     for (let i = 0; i < Object.keys(this.headerarrobject).length; i++) {
-      var d = (this.headerarrobject[i].datatype);
+      
       for (let j = 1; j < this.tabdata.length; j++) {
         var row = worksheet.getRow(j + 1);
         let isfaulty = false;
         if (this.tabdata[j][i] != null) {
-          if (d != typeof this.tabdata[j][i] && d === 'string') {
-            isfaulty = true;
-          }
+          if(this.headerarrobject[i].datatype)
+          {
+            var d = (this.headerarrobject[i].datatype);
+         
           if (d != typeof this.tabdata[j][i] && d === 'number') {
             isfaulty = true;
           }
@@ -82,6 +83,10 @@ export class ErrormessageComponent implements OnInit {
 }      
       
           }
+        }
+        if (typeof this.tabdata[j][i] != 'string') {
+          isfaulty = true;
+        }
         }
         if (this.headerarrobject[i].validation) {
               if (this.tabdata[j][i] == '') {

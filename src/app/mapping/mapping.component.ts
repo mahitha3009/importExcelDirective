@@ -102,17 +102,13 @@ return true;
   onsubmit() {
 
   kk:  for (let i = 0; i < Object.keys(this.headerarrayobject).length; i++) {
-      var d = (this.headerarrayobject[i].datatype);
+  
       for (let j = 1; j < this.tabdata.length; j++) {
         if (this.tabdata[j][i] != "") {
-          if (d != typeof this.tabdata[j][i] && d === 'string') {
-
-            var emsg = "The column mapped to " + this.headerarrayobject[i].hname + " is not a text ";
-            var etitle = "Datatype mismatch!"
-            this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
-            break kk;
-          }
-
+          if(this.headerarrayobject[i].datatype)
+          {
+            var d = (this.headerarrayobject[i].datatype);
+         
           if (d != typeof this.tabdata[j][i] && d === 'number') {
            
             var emsg = "The column mapped to " + this.headerarrayobject[i].hname + " is not a number ";
@@ -133,6 +129,14 @@ return true;
            }
            
           }
+        }
+        if (typeof this.tabdata[j][i] != 'string') {
+
+          var emsg = "The column mapped to " + this.headerarrayobject[i].hname + " is not a text ";
+          var etitle = "Datatype mismatch!"
+          this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
+          break kk;
+        }
         }
 
         if (this.headerarrayobject[i].validation) {

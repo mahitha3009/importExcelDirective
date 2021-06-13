@@ -13,13 +13,10 @@ export class AppComponent {
   constructor(public dialog :MatDialog) {}
   title = 'importexcel';
   public display;
-  public headArr = [{hname:"id"},
-  {hname : "desc", datatype: "string"},
-  {hname : "dp"},
-  {hname : "attach"},
-  {hname : "group"},{hname : "loc"},{hname : "name"},{hname : "price"},{hname : "modelnum"},{hname : "purchasedon" , datatype:"date"},{hname : "retire"},{hname : "retiredon",datatype: "date"},{hname : "salvage"},{hname : "subgroup"},{hname : "vendor"},
-  {hname: "test"},{hname: "test1"},{hname: "test2"}
- 
+  public headArr = [{hname:"itemname"},
+  {hname : "lifespan", datatype: "string"},
+  {hname : "date", datatype:"date"},
+  
 ];
 
   DataFromEventEmitter(data) {
