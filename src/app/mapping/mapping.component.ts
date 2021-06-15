@@ -59,8 +59,14 @@ export class MappingComponent implements OnInit {
  {
 let dateformat = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/; 
   
-  if(dateString.match(dateformat)){      
-    let operator = dateString.split('/');      
+  if(dateString.match(dateformat)){    
+    return true;
+  }
+  else
+  {
+    return false;
+  }  
+    /*let operator = dateString.split('/');      
   
     // Extract the string into month, date and year      
     let datepart = [];      
@@ -85,8 +91,8 @@ let dateformat = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/;
         }      
         if ((leapYear == false) && (day>=29)){      
             return false;      
-        }else      
-        if ((leapYear==true) && (day>29)){      
+        }
+        else if ((leapYear==true) && (day>29)){      
             console.log('Invalid date format!');      
             return false;      
         }      
@@ -95,7 +101,8 @@ let dateformat = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/;
     console.log("Invalid date format!");      
     return false;      
 }      
-return true;      
+return true;   
+*/
 }   
  
 
@@ -119,10 +126,12 @@ return true;
 
           if(d=== 'date')
           {
-           if(this.validatedate(this.tabdata[j][i])==false)
+            var b=this.validatedate(this.tabdata[j][i])
+console.log(b);
+           if(b==false)
            {
              console.log(this.tabdata[j][i]);
-            var emsg = "The column mapped to " + this.headerarrayobject[i].hname + "doesn't have the date in correct format ";
+            var emsg = "The column mapped to " + this.headerarrayobject[i].hname + "doesn't have the date in correct format i.e 'dd/mm/yyyy' ";
             var etitle = "incorrect date format!"
             this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
             break kk;
