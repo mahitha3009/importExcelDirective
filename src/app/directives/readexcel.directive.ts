@@ -122,11 +122,10 @@ openDialog(data)
       })
       return arr
     });
-    
- 
+   
+
     this.keys = Object.keys(data[0]);
     output.unshift(this.keys);
-    
     
 console.log("data",output);
     subscriber.next(output);

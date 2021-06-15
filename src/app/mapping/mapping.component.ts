@@ -33,6 +33,46 @@ export class MappingComponent implements OnInit {
 
   loadpreview() {
     this.preview = true;
+    for (let i = 0; i < Object.keys(this.headerarrayobject).length; i++)
+      {
+          if(this.headerarrayobject[i].datatype==='date')
+          {
+            for(let j=0; j< this.tabdata.length;j++)
+            {
+              var dateformat=/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{2})$/
+              if(this.tabdata[j][i].match(dateformat))
+              {
+               let operator = this.tabdata[j][i].split('/');      
+                  
+              let datepart = [];      
+              if (operator.length>1){      
+                  datepart = this.tabdata[j][i].split('/');      
+              }            
+              let year = parseInt(datepart[2]); 
+              let month = parseInt(datepart[1]);
+              let day = parseInt(datepart[0]);
+              var str=new Date().getFullYear().toString().substr(2, 2);
+               var cy=parseInt(str);
+              if(year>0 && year <=cy)
+              {
+                year=(2*1000)+year;
+                console.log(year);
+                this.tabdata[j][i]=`${day}/${month}/${year}`;
+                console.log(this.tabdata[j][i]);
+                
+              }
+              else
+              {
+                year=(19*1000)+year;
+                console.log(year);
+                this.tabdata[j][i]=`${day}/${month}/${year}`;
+                console.log(this.tabdata[j][i]);
+              }
+
+            }
+          }
+      }
+    }
   }
 
 
@@ -58,8 +98,10 @@ export class MappingComponent implements OnInit {
  validatedate(dateString)
  {
 
-let dateformat = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/; 
-let operator = dateString.split('/');      
+let dateformat = /^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{2,4})$/; 
+    if(dateString.match(dateformat))
+    {
+     let operator = dateString.split('/');      
   
     // Extract the string into month, date and year      
     let datepart = [];      
@@ -69,13 +111,23 @@ let operator = dateString.split('/');
     let month= parseInt(datepart[1]);      
     let day = parseInt(datepart[0]);      
     let year = parseInt(datepart[2]); 
-  if(dateString.match(dateformat) && month<13){    
+    if(month<13 && day<=31)
+    {
+      return true;
+    }
+    return false;
+  }
+  else
+  {
+    return false;
+  }
+ /* if(dateString.match(dateformat) && month<13){    
     return true;
   }
   else
   {
     return false;
-  }  
+  }  */
     /*let operator = dateString.split('/');      
   
     // Extract the string into month, date and year      
@@ -141,8 +193,8 @@ console.log(b);
            if(b==false)
            {
              console.log(this.tabdata[j][i]);
-            var emsg = "The column mapped to " + this.headerarrayobject[i].hname + "doesn't have the date in correct format i.e 'dd/mm/yyyy' ";
-            var etitle = "incorrect date format!"
+            var emsg = "The column mapped to " + this.headerarrayobject[i].hname + " doesn't have the date in correct format i.e 'dd/mm/yyyy' or the date is invalid. ";
+            var etitle = "Incorrect date format!"
             this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
             break kk;
            }
