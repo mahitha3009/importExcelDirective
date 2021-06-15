@@ -46,8 +46,19 @@ export class ErrormessageComponent implements OnInit {
           }
           if(d==='date')
           {
+            //let dateformat=/^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
             let dateformat = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/; 
-  if(!this.tabdata[j][i].match(dateformat)){      
+            let operator = this.tabdata[j][i].split('/');      
+  
+            // Extract the string into month, date and year      
+            let datepart = [];      
+            if (operator.length>1){      
+                datepart = this.tabdata[j][i].split('/');      
+            }      
+            let month= parseInt(datepart[1]);      
+            let day = parseInt(datepart[0]);      
+            let year = parseInt(datepart[2]); 
+  if(!(this.tabdata[j][i].match(dateformat) && month<13)){      
             isfaulty=true;
         
           }

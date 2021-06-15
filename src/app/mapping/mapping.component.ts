@@ -57,9 +57,19 @@ export class MappingComponent implements OnInit {
   }
  validatedate(dateString)
  {
+
 let dateformat = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/; 
+let operator = dateString.split('/');      
   
-  if(dateString.match(dateformat)){    
+    // Extract the string into month, date and year      
+    let datepart = [];      
+    if (operator.length>1){      
+        datepart = dateString.split('/');      
+    }      
+    let month= parseInt(datepart[1]);      
+    let day = parseInt(datepart[0]);      
+    let year = parseInt(datepart[2]); 
+  if(dateString.match(dateformat) && month<13){    
     return true;
   }
   else
