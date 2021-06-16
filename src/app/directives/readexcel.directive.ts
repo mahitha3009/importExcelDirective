@@ -27,7 +27,6 @@ export class ReadexcelDirective {
 
 openDialog(data) 
 {
-  console.log(Object.keys(this.headArr).length);
   if(Object.keys(this.headArr).length==data.tableData[0].length && data.tableData.length<100)
   {
   let dialogRef = this.dialog.open( MappingComponent,{
@@ -64,7 +63,6 @@ openDialog(data)
 
   @HostListener('change', ['$event.target'])
   onChange(target: HTMLInputElement) {
-   console.log(this.headArr);
     const file = target.files[0];
     this.excelObservable = new Observable((subscriber: Subscriber<any>) => {
       this.readFile(file, subscriber);
@@ -78,7 +76,7 @@ openDialog(data)
   readFile(file: File, subscriber: Subscriber<any>) {
     const fileReader = new FileReader();
     var Ext= file.name.split('.')[1]; 
-    console.log(Ext);
+    //read a .csv file
     if( Ext == "csv")
     {
     fileReader.readAsText(file);
@@ -92,7 +90,7 @@ openDialog(data)
 
     const data = XLSX.utils.sheet_to_json(ws, {raw:false});
     
-    console.log(data);
+    
     let arr= new Set()
     data.map(d=>{
       Object.keys(d).map(key =>{
@@ -108,8 +106,8 @@ openDialog(data)
         }
       })
     })
-    console.log(data);
 
+//converts the array of objects into array of array
     var output = data.map(function(obj) {
       let arr=[]
       Arr.map(key=>{
@@ -127,7 +125,7 @@ openDialog(data)
     this.keys = Object.keys(data[0]);
     output.unshift(this.keys);
     
-console.log("data",output);
+//console.log("data",output);
     subscriber.next(output);
     subscriber.complete();
 
@@ -149,6 +147,7 @@ console.log("data",output);
     
   };
 }
+//read an .xlsx file 
     else if(Ext=="xlsx")
     {
       fileReader.readAsArrayBuffer(file);
@@ -162,7 +161,6 @@ console.log("data",output);
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
 
       const data = XLSX.utils.sheet_to_json(ws, {raw:false});
-      console.log(data);
       let arr= new Set()
       data.map(d=>{
         Object.keys(d).map(key =>{
@@ -178,8 +176,8 @@ console.log("data",output);
           }
         })
       })
-      console.log(data);
-  
+
+  //convert the array of objects to array of array
       var output = data.map(function(obj) {
         let arr=[]
         Arr.map(key=>{
@@ -196,7 +194,7 @@ console.log("data",output);
      var keys = Object.keys(data[0]);
       output.unshift(keys);
 
-console.log("data",output);
+//console.log("data",output);
       subscriber.next(output);
       subscriber.complete();
 
@@ -206,7 +204,7 @@ console.log("data",output);
       {
        columns.push(`col${i}`);
       }
-      console.log(columns);
+      
 
       //header array
       let headerArray=[];

@@ -5,6 +5,7 @@ import { ReadexcelDirective } from '../directives/readexcel.directive';
 import { ErrormessageComponent } from '../errormessage/errormessage.component';
 
 
+
 @Component({
   selector: 'app-mapping',
   templateUrl: './mapping.component.html',
@@ -14,10 +15,10 @@ export class MappingComponent implements OnInit {
   public headers = [];
   public columns = [];
   public preview = false;
-  public submit = true;
   public newdata;
   public headerarrayobject = {};
   public tabdata;
+  public flag=false;
   displayedColumns: string[] = ["header", "column"];
 
   constructor(public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data) {
@@ -33,6 +34,7 @@ export class MappingComponent implements OnInit {
 
   loadpreview() {
     this.preview = true;
+    //check the year in the date and get the 4-digit date
     for (let i = 0; i < Object.keys(this.headerarrayobject).length; i++)
       {
           if(this.headerarrayobject[i].datatype==='date')
@@ -53,7 +55,7 @@ export class MappingComponent implements OnInit {
               let day = parseInt(datepart[0]);
               var str=new Date().getFullYear().toString().substr(2, 2);
                var cy=parseInt(str);
-              if(year>0 && year <=cy)
+              if(year>=0 && year <=cy)
               {
                 year=(2*1000)+year;
                 console.log(year);
@@ -63,7 +65,7 @@ export class MappingComponent implements OnInit {
               }
               else
               {
-                year=(19*1000)+year;
+                year=(19*100)+year;
                 console.log(year);
                 this.tabdata[j][i]=`${day}/${month}/${year}`;
                 console.log(this.tabdata[j][i]);
@@ -75,7 +77,7 @@ export class MappingComponent implements OnInit {
     }
   }
 
-
+//drag and drop functionality of the columns table
   drop(event: CdkDragDrop<string[]>) {
     let oldtarget = this.columns[event.previousIndex];
     this.columns[event.previousIndex] = this.columns[event.currentIndex];
@@ -95,40 +97,14 @@ export class MappingComponent implements OnInit {
       data: data
     });
   }
+
+  //date validation 
  validatedate(dateString)
  {
-
-let dateformat = /^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{2,4})$/; 
-    if(dateString.match(dateformat))
-    {
-     let operator = dateString.split('/');      
-  
-    // Extract the string into month, date and year      
-    let datepart = [];      
-    if (operator.length>1){      
-        datepart = dateString.split('/');      
-    }      
-    let month= parseInt(datepart[1]);      
-    let day = parseInt(datepart[0]);      
-    let year = parseInt(datepart[2]); 
-    if(month<13 && day<=31)
-    {
-      return true;
-    }
-    return false;
-  }
-  else
+  let dateformat = /^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{2,4})$/; 
+  if(dateString.match(dateformat))
   {
-    return false;
-  }
- /* if(dateString.match(dateformat) && month<13){    
-    return true;
-  }
-  else
-  {
-    return false;
-  }  */
-    /*let operator = dateString.split('/');      
+    let operator = dateString.split('/');      
   
     // Extract the string into month, date and year      
     let datepart = [];      
@@ -138,12 +114,12 @@ let dateformat = /^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{2,4})$/;
     let month= parseInt(datepart[1]);      
     let day = parseInt(datepart[0]);      
     let year = parseInt(datepart[2]);      
-          
-    // Create list of days of a month      
-    let ListofDays = [31,28,31,30,31,30,31,31,30,31,30,31];      
+                
+    let ListofDays = [31,28,31,30,31,30,31,31,30,31,30,31];  
+    if(month>12)
+    return false    
     if (month==1 || month>2){      
-        if (day>ListofDays[month-1]){      
-            ///This check is for Confirming that the date is not out of its range      
+        if (day>ListofDays[month-1]){         
             return false;      
         }      
     }else if (month==2){      
@@ -154,22 +130,20 @@ let dateformat = /^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{2,4})$/;
         if ((leapYear == false) && (day>=29)){      
             return false;      
         }
-        else if ((leapYear==true) && (day>29)){      
-            console.log('Invalid date format!');      
+        else if ((leapYear==true) && (day>29)){          
             return false;      
         }      
     }      
-}else{      
-    console.log("Invalid date format!");      
+}else{           
     return false;      
 }      
 return true;   
-*/
+
 }   
  
-
+//validate the table data on submit 
   onsubmit() {
-
+ 
   kk:  for (let i = 0; i < Object.keys(this.headerarrayobject).length; i++) {
   
       for (let j = 1; j < this.tabdata.length; j++) {
@@ -179,7 +153,7 @@ return true;
             var d = (this.headerarrayobject[i].datatype);
          
           if (d != typeof this.tabdata[j][i] && d === 'number') {
-           
+          this.flag=true;
             var emsg = "The column mapped to " + this.headerarrayobject[i].hname + " is not a number ";
             var etitle = "Datatype mismatch!"
             this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
@@ -189,9 +163,9 @@ return true;
           if(d=== 'date')
           {
             var b=this.validatedate(this.tabdata[j][i])
-console.log(b);
            if(b==false)
            {
+             this.flag=true;
              console.log(this.tabdata[j][i]);
             var emsg = "The column mapped to " + this.headerarrayobject[i].hname + " doesn't have the date in correct format i.e 'dd/mm/yyyy' or the date is invalid. ";
             var etitle = "Incorrect date format!"
@@ -202,93 +176,34 @@ console.log(b);
           }
         }
         if (typeof this.tabdata[j][i] != 'string') {
-
+this.flag=true;
           var emsg = "The column mapped to " + this.headerarrayobject[i].hname + " is not a text ";
           var etitle = "Datatype mismatch!"
           this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
           break kk;
         }
         }
-
         if (this.headerarrayobject[i].validation) {
+          if(this.headerarrayobject[i].validation.required)
+          {
           if (this.tabdata[j][i] === "") {
+            this.flag=true;
             var etitle = "validation rule mismatch";
             var emsg = "The values in column  mapped to " + this.headerarrayobject[i].hname + "  does not satisfy the validation condition";
             this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
             break kk;
           }
         }
-
+      }
       }
     }
-    /*
-    this.eflag=false;
-    for(let i=0; i<Object.keys(this.headerarrayobject).length;i++)
+    if(this.flag==false)
     {
-      var d=(this.headerarrayobject[i].datatype);
-     for(let j=0;j<this.newdata[0].length;j++)
-     {
-       if(this.headerarrayobject[i].hname.toUpperCase() === this.newdata[0][j].toUpperCase())
-       {
-          this.t=j;
-       }
-     }
-     if(this.eflag)
-     {
-       break;
-     }
-    for(let j=1;j<this.tabdata.length;j++)
-      {
-      if(this.tabdata[j][this.t]!= "")
-       {
-        if(d!=typeof this.tabdata[j][this.t] && d==='string')
-        {
-          this.eflag=true;
-           var emsg = "The column mapped to " + this.headerarrayobject[i].hname + " is not a text ";
-           var etitle= "Datatype mismatch!"
-            this.openDialog({error: emsg ,etitle:etitle, tabledata: this.data.tableData, headerarrayobject : this.headerarrayobject});
-          break;
-        }
-      
-        if(d!=typeof this.tabdata[j][this.t] && d==='number')
-        {
-         this.eflag=true;
-            var emsg = "The column mapped to " + this.headerarrayobject[i].hname + " is not a number "; 
-            var etitle= "Datatype mismatch!"
-            this.openDialog({error: emsg ,etitle:etitle, tabledata: this.data.tableData, headerarrayobject : this.headerarrayobject});
-          break;
-        }
-     }
-     if(this.eflag)
-     {
-       break;
-     }
-  
-     if(this.headerarrayobject[i].validation)
-     {
-      var v= this.headerarrayobject[i].validation;
-     for(let k=0;k<v.length;k++)
-       {
-        if( v[k] === 'required')
-        {
-          if(this.tabdata[j][this.t] === "")
-          {
-            this.eflag=true;
-            var etitle="validation rule mismatch";
-            var  emsg ="The values in column  mapped to " + this.headerarrayobject[i].hname + "  do not satisfy the '" +v[k]+ "' validation condition";
-            this.openDialog({error: emsg ,etitle: etitle, tabledata: this.data.tableData, headerarrayobject : this.headerarrayobject});
-            break;
-          }
-        }
-  
-      }
-     
+      return this.tabdata;
     }
-    
+  
    
-    }
-  
-  }*/
+   
   }
 
 }

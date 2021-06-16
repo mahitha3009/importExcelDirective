@@ -13,13 +13,13 @@ export class AppComponent {
   
   constructor(public dialog :MatDialog) {}
   title = 'importexcel';
-  public display;
+  //Array of objects that contain header names and their validations
   public headArr = [{hname:"itemname"},
-  {hname : "lifespan", datatype: "string"},
+  {hname : "lifespan", datatype: "string", validation : {required:"true", minlength:"", maxlength:""}},
   {hname : "date", datatype:"date"},
   {hname:"breakdowns"}
 ];
-
+ 
   DataFromEventEmitter(data) {
    console.log(data);
   }

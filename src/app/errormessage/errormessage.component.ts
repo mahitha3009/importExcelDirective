@@ -23,7 +23,7 @@ export class ErrormessageComponent implements OnInit {
   }
   fileName: string = 'Faultyreport.xlsx';
 
-
+// export faulty report as an excel sheet 
   export(): void {
 
     let workbook = new Excel.Workbook();
@@ -32,47 +32,69 @@ export class ErrormessageComponent implements OnInit {
       const row = worksheet.addRow(this.tabdata[j]);
     }
     for (let i = 0; i < Object.keys(this.headerarrobject).length; i++) {
-      
+
       for (let j = 1; j < this.tabdata.length; j++) {
         var row = worksheet.getRow(j + 1);
         let isfaulty = false;
         if (this.tabdata[j][i] != "") {
-          if(this.headerarrobject[i].datatype)
-          {
+          if (this.headerarrobject[i].datatype) {
             var d = (this.headerarrobject[i].datatype);
-         
-          if (d != typeof this.tabdata[j][i] && d === 'number') {
+
+            if (d != typeof this.tabdata[j][i] && d === 'number') {
+              isfaulty = true;
+            }
+            if (d === 'date') {
+              let dateformat = /^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{2,4})$/;
+              if (this.tabdata[j][i].match(dateformat)) {
+                let operator = this.tabdata[j][i].split('/');
+
+                // Extract the string into month, date and year      
+                let datepart = [];
+                if (operator.length > 1) {
+                  datepart = this.tabdata[j][i].split('/');
+                }
+                let month = parseInt(datepart[1]);
+                let day = parseInt(datepart[0]);
+                let year = parseInt(datepart[2]);
+
+                let ListofDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+                if (month > 12)
+                  isfaulty = true;
+                if (month == 1 || month > 2) {
+                  if (day > ListofDays[month - 1]) {
+                    isfaulty = true;
+                  }
+                } else if (month == 2) {
+                  let leapYear = false;
+                  if ((!(year % 4) && year % 100) || !(year % 400)) {
+                    leapYear = true;
+                  }
+                  if ((leapYear == false) && (day >= 29)) {
+                    isfaulty = true;
+                  }
+                  else if ((leapYear == true) && (day > 29)) {
+                    
+                    isfaulty = true;
+                  }
+                }
+              } else {
+                
+                isfaulty = true;
+              }
+
+
+            }
+          }
+          if (typeof this.tabdata[j][i] != 'string') {
             isfaulty = true;
           }
-          if(d==='date')
-          {
-            let dateformat = /^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{2,4})$/; 
-
-            let operator = this.tabdata[j][i].split('/');      
-  
-            // Extract the string into month, date and year      
-            let datepart = [];      
-            if (operator.length>1){      
-                datepart = this.tabdata[j][i].split('/');      
-            }      
-            let month= parseInt(datepart[1]);      
-            let day = parseInt(datepart[0]);      
-            let year = parseInt(datepart[2]); 
-  if(!(this.tabdata[j][i].match(dateformat) && day<=31 && month<13)){      
-            isfaulty=true;
-        
-          }
-        }
-        }
-        if (typeof this.tabdata[j][i] != 'string') {
-          isfaulty = true;
-        }
         }
         if (this.headerarrobject[i].validation) {
-              if (this.tabdata[j][i] == '') {
-                isfaulty = true;
-                break;
-              }
+          if (this.headerarrobject[i].validation.required) {
+            if (this.tabdata[j][i] == '') {
+              isfaulty = true;
+            }
+          }
         }
         if (isfaulty) {
           const qty = row.getCell(i + 1);
