@@ -58,17 +58,17 @@ export class MappingComponent implements OnInit {
               if(year>=0 && year <=cy)
               {
                 year=(2*1000)+year;
-                console.log(year);
+               
                 this.tabdata[j][i]=`${day}/${month}/${year}`;
-                console.log(this.tabdata[j][i]);
+                
                 
               }
               else
               {
                 year=(19*100)+year;
-                console.log(year);
+              
                 this.tabdata[j][i]=`${day}/${month}/${year}`;
-                console.log(this.tabdata[j][i]);
+            
               }
 
             }
@@ -159,6 +159,13 @@ return true;
             this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
             break kk;
           }
+          if (d != typeof this.tabdata[j][i] && d === 'string') {
+            this.flag=true;
+              var emsg = "The column mapped to " + this.headerarrayobject[i].hname + " is not a text ";
+              var etitle = "Datatype mismatch!"
+              this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
+              break kk;
+            }
 
           if(d=== 'date')
           {
@@ -175,25 +182,73 @@ return true;
            
           }
         }
-        if (typeof this.tabdata[j][i] != 'string') {
-this.flag=true;
-          var emsg = "The column mapped to " + this.headerarrayobject[i].hname + " is not a text ";
-          var etitle = "Datatype mismatch!"
-          this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
-          break kk;
-        }
+       
         }
         if (this.headerarrayobject[i].validation) {
-          if(this.headerarrayobject[i].validation.required)
+          if(this.headerarrayobject[i].validation.required==true)
           {
           if (this.tabdata[j][i] === "") {
             this.flag=true;
             var etitle = "validation rule mismatch";
-            var emsg = "The values in column  mapped to " + this.headerarrayobject[i].hname + "  does not satisfy the validation condition";
+            var emsg = "The values in column  mapped to " + this.headerarrayobject[i].hname + "  does not satisfy the required validation condition";
             this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
             break kk;
           }
         }
+        if(this.headerarrayobject[i].validation.minlength )
+        {
+          var minlen=parseInt(this.headerarrayobject[i].validation.minlength);
+          if(this.tabdata[j][i].length<minlen)
+          {
+            
+            this.flag=true;
+            var etitle = "validation rule mismatch";
+            var emsg = "The values in column  mapped to " + this.headerarrayobject[i].hname + "  does not satisfy the minlength validation condition";
+            this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
+            break kk;
+          }
+  
+        }
+        if(this.headerarrayobject[i].validation.maxlength)
+        {
+          var maxlen=parseInt(this.headerarrayobject[i].validation.maxlength);
+          if(this.tabdata[j][i].length>maxlen)
+          {
+            this.flag=true;
+            var etitle = "validation rule mismatch";
+            var emsg = "The values in column  mapped to " + this.headerarrayobject[i].hname + "  does not satisfy the maxlength validation condition";
+            this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
+            break kk;
+          }
+  
+        }
+        if(this.headerarrayobject[i].validation.lowerlimit && this.headerarrayobject[i].datatype=='number')
+        {
+          var lower=parseInt(this.headerarrayobject[i].validation.lowerlimit);
+          if(this.tabdata[j][i]<lower)
+          {
+            this.flag=true;
+            var etitle = "validation rule mismatch";
+            var emsg = "The values in column  mapped to " + this.headerarrayobject[i].hname + "  does not satisfy the maxlength validation condition";
+            this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
+            break kk;
+          }
+  
+        }
+        if(this.headerarrayobject[i].validation.upperlimit && this.headerarrayobject[i].datatype=='number')
+        {
+          var upper=parseInt(this.headerarrayobject[i].validation.upperlimit);
+          if(this.tabdata[j][i]>upper)
+          {
+            this.flag=true;
+            var etitle = "validation rule mismatch";
+            var emsg = "The values in column  mapped to " + this.headerarrayobject[i].hname + "  does not satisfy the upperlimit validation condition";
+            this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
+            break kk;
+          }
+  
+        }
+
       }
       }
     }

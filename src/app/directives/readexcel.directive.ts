@@ -35,10 +35,6 @@ openDialog(data)
    panelClass: 'custom-dialog-container',
     data: data
 });
-  dialogRef.afterClosed().subscribe(result =>
-    {
-      // console.log(`Dialog result: ${result}`);
-    });
   }
   else if(Object.keys(this.headArr).length!=data.tableData[0].length)
   {

@@ -14,8 +14,8 @@ export class AppComponent {
   constructor(public dialog :MatDialog) {}
   title = 'importexcel';
   //Array of objects that contain header names and their validations
-  public headArr = [{hname:"itemname"},
-  {hname : "lifespan", datatype: "string", validation : {required:"true", minlength:"", maxlength:""}},
+  public headArr = [{hname:"id", datatype: "number", validation:{lowerlimit:"5",upperlimit:"50"}},
+  {hname : "lifespan", datatype: "string", validation : {required:"true", minlength:"3", maxlength:"20"}},
   {hname : "date", datatype:"date"},
   {hname:"breakdowns"}
 ];

@@ -43,6 +43,9 @@ export class ErrormessageComponent implements OnInit {
             if (d != typeof this.tabdata[j][i] && d === 'number') {
               isfaulty = true;
             }
+            if (d != typeof this.tabdata[j][i] && d === 'string') {
+              isfaulty = true;
+            }
             if (d === 'date') {
               let dateformat = /^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{2,4})$/;
               if (this.tabdata[j][i].match(dateformat)) {
@@ -85,9 +88,7 @@ export class ErrormessageComponent implements OnInit {
 
             }
           }
-          if (typeof this.tabdata[j][i] != 'string') {
-            isfaulty = true;
-          }
+         
         }
         if (this.headerarrobject[i].validation) {
           if (this.headerarrobject[i].validation.required) {
@@ -95,6 +96,43 @@ export class ErrormessageComponent implements OnInit {
               isfaulty = true;
             }
           }
+          if(this.headerarrobject[i].validation.minlength )
+        {
+          var minlen=parseInt(this.headerarrobject[i].validation.minlength);
+          if(this.tabdata[j][i].length<minlen)
+          {
+            
+            isfaulty=true;
+          }
+  
+        }
+        if(this.headerarrobject[i].validation.maxlength)
+        {
+          var maxlen=parseInt(this.headerarrobject[i].validation.maxlength);
+          if(this.tabdata[j][i].length>maxlen)
+          {
+            isfaulty=true;
+          }
+  
+        }
+        if(this.headerarrobject[i].validation.lowerlimit && this.headerarrobject[i].datatype=='number')
+        {
+          var lower=parseInt(this.headerarrobject[i].validation.lowerlimit);
+          if(this.tabdata[j][i]<lower)
+          {
+            isfaulty=true;
+          }
+  
+        }
+        if(this.headerarrobject[i].validation.upperlimit && this.headerarrobject[i].datatype=='number')
+        {
+          var upper=parseInt(this.headerarrobject[i].validation.upperlimit);
+          if(this.tabdata[j][i]>upper)
+          {
+            isfaulty=true;
+          }
+  
+        }
         }
         if (isfaulty) {
           const qty = row.getCell(i + 1);
