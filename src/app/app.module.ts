@@ -20,6 +20,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { ErrormessageComponent } from './errormessage/errormessage.component';
 import { DetailsComponent } from './details/details.component';
 import { InformativeIconComponent } from './informative-icon/informative-icon.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { InformativeIconComponent } from './informative-icon/informative-icon.co
     CdkTableModule,
     CdkTreeModule,
     DragDropModule,
+    MatExpansionModule
   ],
   entryComponents: [
    MappingComponent,

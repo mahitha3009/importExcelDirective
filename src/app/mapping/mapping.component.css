@@ -51,7 +51,7 @@
 
 .mappingdiv {
   display: flex;
-  flex-basis: 25%;
+  flex-basis: 28%;
   flex-direction: row;
   justify-content: space-evenly;
   max-height: 350px;
@@ -61,6 +61,11 @@
 .col-names .col-ids {
   flex-basis: 50%;
   
+}
+.validdiv
+{
+  display: flex;
+  flex-direction: column;
 }
 
 

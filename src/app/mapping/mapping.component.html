@@ -2,7 +2,7 @@
   <h1> Mapping </h1>
   <div class="header">
   <div class="commentdiv">
-    Drag and drop the column values to the respective header values and preview the result in the table. 
+    Drag and drop the column values to the respective header values and preview the result in the table. click on the header values to view the validations.
     <b>The dates should be specified in the format 'dd/mm/yyyy' </b>
    </div>
    <div class="previewbuttdiv">
@@ -12,17 +12,37 @@
   <div class="whole">
     <div class="wholeTables">
   <div class="mappingdiv">
-    <table class="table col-names">
+   <!-- <table class="table col-names">
         <tr>
           <th scope="col">Headers</th>
         </tr>
         <tr *ngFor="let h of headers">
-          <td>
+          <td> 
             <div style="height: 30px;">
-            {{h}}
-          </div></td>
+           {{h}}  
+          </div> 
+        </td>
         </tr>
-    </table>
+    </table>-->
+    <table class="table col-names">
+      <tr style="height:30px">
+        <th scope="col">  Headers</th>
+      </tr>
+      <tr *ngFor="let h of headers; index as i" >
+
+    <mat-accordion>
+      <mat-expansion-panel  style="box-shadow:none;border-top: 1px solid #dee2e6;border-radius: 0px;">
+        <mat-expansion-panel-header class="mat-row">
+      <div> {{h}} </div> 
+        </mat-expansion-panel-header>
+        <div class="validdiv">  <div *ngIf="headerarrayobject[i].datatype"> datatype : {{headerarrayobject[i].datatype}} </div>
+          <div *ngFor=" let val of headerarrayobject[i].validation | keyvalue"> {{val.key}}: {{val.value}} </div>
+       
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    </tr>
+  </table>
     <table class="table col-ids" id="col">
         <tr>
           <th scope="col">Columns</th>

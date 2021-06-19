@@ -17,7 +17,7 @@ export class AppComponent {
   public headArr = [{hname:"id", datatype: "number", validation:{lowerlimit:"5",upperlimit:"50"}},
   {hname : "lifespan", datatype: "string", validation : {required:"true", minlength:"3", maxlength:"20"}},
   {hname : "date", datatype:"date"},
-  {hname:"breakdowns"}
+  {hname:"breakdowns" ,datatype: "string"}
 ];
  
   DataFromEventEmitter(data) {

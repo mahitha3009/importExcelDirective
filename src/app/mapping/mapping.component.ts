@@ -3,6 +3,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { ReadexcelDirective } from '../directives/readexcel.directive';
 import { ErrormessageComponent } from '../errormessage/errormessage.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 
@@ -12,6 +13,9 @@ import { ErrormessageComponent } from '../errormessage/errormessage.component';
   styleUrls: ['./mapping.component.css']
 })
 export class MappingComponent implements OnInit {
+  public header=[];
+  public datatypes=[];
+  public validation=[];
   public headers = [];
   public columns = [];
   public preview = false;
@@ -20,9 +24,11 @@ export class MappingComponent implements OnInit {
   public tabdata;
   public flag=false;
   displayedColumns: string[] = ["header", "column"];
+  panelOpenState = false;
 
   constructor(public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data) {
   }
+  
 
   ngOnInit(): void {
     this.headers = this.data.headers;
@@ -30,10 +36,32 @@ export class MappingComponent implements OnInit {
     this.tabdata = this.data.tableData;
     this.newdata = this.data.tableData.slice(0, 6);
     this.headerarrayobject = this.data.headArr;
+    /*for (let i = 0; i < Object.keys(this.headerarrayobject).length; i++)
+    {
+      this.header.push(this.headerarrayobject[i].hname);
+      if(this.headerarrayobject[i].datatype)
+      {
+        this.datatypes.push(this.headerarrayobject[i].datatype)
+      }
+      if(!this.headerarrayobject[i].datatype)
+      {
+        this.datatypes.push("string");
+      }
+    }*/
   }
 
   loadpreview() {
     this.preview = true;
+   for(let k=0;k<this.newdata.length;k++)
+    {
+      for(let m=0;m<this.newdata[k].length;m++)
+      {
+        if( typeof this.newdata[k][m]=="string" && this.newdata[k][m].length>=70)
+        {
+               this.newdata[k][m]= this.newdata[k][m].substring(0, 50) + "..."
+        }
+      }
+    }
     //check the year in the date and get the 4-digit date
     for (let i = 0; i < Object.keys(this.headerarrayobject).length; i++)
       {
@@ -229,7 +257,7 @@ return true;
           {
             this.flag=true;
             var etitle = "validation rule mismatch";
-            var emsg = "The values in column  mapped to " + this.headerarrayobject[i].hname + "  does not satisfy the maxlength validation condition";
+            var emsg = "The values in column  mapped to " + this.headerarrayobject[i].hname + "  does not satisfy the lowerlimit validation condition";
             this.openDialog({ error: emsg, etitle: etitle, tabledata: this.data.tableData, headerarrayobject: this.headerarrayobject });
             break kk;
           }
@@ -254,7 +282,7 @@ return true;
     }
     if(this.flag==false)
     {
-      return this.tabdata;
+      console.log(this.tabdata);
     }
   
    
